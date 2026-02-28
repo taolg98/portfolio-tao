@@ -128,19 +128,24 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .card.is-hidden{display:none}
 .card.is-revealing{display:block;animation:cardReveal .7s var(--ease-out) both}
 @keyframes cardReveal{0%{opacity:0;transform:translateY(24px) scale(.97)}100%{opacity:1;transform:translateY(0) scale(1)}}
-.card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s var(--ease-out),filter .8s var(--ease-out);filter:brightness(.55) saturate(.85)}
+
+/* ✅ LAYERING FIX (texte au-dessus des vidéos / backgrounds) */
+.card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s var(--ease-out),filter .8s var(--ease-out);filter:brightness(.55) saturate(.85);z-index:1}
 .card:hover .card-bg{transform:scale(1.06);filter:brightness(.7) saturate(1)}
-.card-gradient{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.4) 35%,rgba(0,0,0,.05) 60%,transparent 100%)}
-.card-content{position:absolute;bottom:0;left:0;right:0;padding:28px;transform:translateY(6px);transition:transform .6s var(--ease-out)}
+.card-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.85);transition:transform .8s var(--ease-out),filter .8s var(--ease-out);z-index:1}
+.card:hover .card-video{transform:scale(1.06);filter:brightness(.7) saturate(1)}
+.card-gradient{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.4) 35%,rgba(0,0,0,.05) 60%,transparent 100%);z-index:2;pointer-events:none}
+.card-content{position:absolute;bottom:0;left:0;right:0;padding:28px;transform:translateY(6px);transition:transform .6s var(--ease-out);z-index:3}
 .card:hover .card-content{transform:translateY(0)}
+.card-ext{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;font-size:14px;opacity:0;transform:translateY(6px) scale(.9);transition:all .5s var(--ease-out);z-index:4}
+.card:hover .card-ext{opacity:1;transform:translateY(0) scale(1)}
+.card-ext:hover{background:rgba(255,255,255,.15)}
+
 .card-cat{font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--grey-bright);margin-bottom:8px}
 .card-title{font-family:var(--font-display);font-size:16px;font-weight:700;line-height:1.3;margin-bottom:10px;letter-spacing:-.01em}
 .card-stats{display:flex;gap:16px;flex-wrap:wrap}
 .card-stat{font-size:12px;color:var(--grey-mid);font-weight:400}
 .card-stat b{color:var(--white-dim);font-weight:600}
-.card-ext{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;font-size:14px;opacity:0;transform:translateY(6px) scale(.9);transition:all .5s var(--ease-out)}
-.card:hover .card-ext{opacity:1;transform:translateY(0) scale(1)}
-.card-ext:hover{background:rgba(255,255,255,.15)}
 
 /* Show more button */
 .show-more-wrap{display:flex;justify-content:center;margin-top:36px}
@@ -240,10 +245,6 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
 
 <div class="divider"></div>
 
-<!-- ═══════════════════════════════════════════
-     WORKS — Tabbed: one category visible at a time
-     Formats viraux active by default
-     ═══════════════════════════════════════════ -->
 <section class="works" id="works">
   <div class="works-header">
     <div class="section-label centered reveal">Travaux</div>
@@ -251,18 +252,20 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
     <p class="reveal reveal-d2">Chaque contenu est un format court pensé pour performer.</p>
   </div>
 
-  <!-- TABS -->
   <div class="tabs reveal">
     <button class="tab-btn active" data-panel="viral">Formats viraux<span class="tab-count">7</span></button>
     <button class="tab-btn" data-panel="editorial">Éditorial<span class="tab-count">18</span></button>
     <button class="tab-btn" data-panel="animation">Animation & IA<span class="tab-count">9</span></button>
   </div>
 
-  <!-- ────── PANEL: FORMATS VIRAUX (7) ────── -->
   <div class="cat-panel active is-entering" id="panel-viral" data-limit="6">
     <div class="grid">
+
+      <!-- ✅ VIDEO 1 (Pierre Niney) — remplace le src par ton vrai nom de fichier dans /videos -->
       <div class="card">
-        <div class="card-bg" style="background:linear-gradient(135deg,#111827,#1e293b)"></div>
+        <video class="card-video" autoplay muted loop playsinline preload="metadata">
+          <source src="videos/pierreniney.mp4" type="video/mp4">
+        </video>
         <div class="card-gradient"></div>
         <a href="https://www.instagram.com/reel/DCj5rqcC4AK/" target="_blank" class="card-ext">↗</a>
         <div class="card-content">
@@ -271,8 +274,12 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
           <div class="card-stats"><span class="card-stat"><b>7.2M</b> vues</span><span class="card-stat"><b>453k</b> likes</span></div>
         </div>
       </div>
+
+      <!-- ✅ VIDEO 2 (Aya Nakamura) -->
       <div class="card">
-        <div class="card-bg" style="background:linear-gradient(135deg,#1a1025,#2d1b4e)"></div>
+        <video class="card-video" autoplay muted loop playsinline preload="metadata">
+          <source src="videos/ayanakamura.mp4" type="video/mp4">
+        </video>
         <div class="card-gradient"></div>
         <a href="https://www.tiktok.com/@bangrzfr/video/7349234439219694880?lang=fr" target="_blank" class="card-ext">↗</a>
         <div class="card-content">
@@ -281,8 +288,12 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
           <div class="card-stats"><span class="card-stat"><b>2.7M</b> vues</span><span class="card-stat"><b>153k</b> likes</span></div>
         </div>
       </div>
+
+      <!-- ✅ VIDEO 3 (Burna Boy) -->
       <div class="card">
-        <div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#292524)"></div>
+        <video class="card-video" autoplay muted loop playsinline preload="metadata">
+          <source src="videos/burnaboy.mp4" type="video/mp4">
+        </video>
         <div class="card-gradient"></div>
         <a href="https://www.tiktok.com/@bangrzfr/video/7372594849746390304?lang=fr" target="_blank" class="card-ext">↗</a>
         <div class="card-content">
@@ -291,6 +302,8 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
           <div class="card-stats"><span class="card-stat"><b>25.7k</b> likes</span></div>
         </div>
       </div>
+
+      <!-- Les autres restent en background -->
       <div class="card">
         <div class="card-bg" style="background:linear-gradient(135deg,#1e1b2e,#2a2040)"></div>
         <div class="card-gradient"></div>
@@ -301,6 +314,7 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
           <div class="card-stats"><span class="card-stat"><b>1.9k</b> likes</span></div>
         </div>
       </div>
+
       <div class="card">
         <div class="card-bg" style="background:linear-gradient(135deg,#18181b,#27272a)"></div>
         <div class="card-gradient"></div>
@@ -311,6 +325,7 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
           <div class="card-stats"><span class="card-stat"><b>1.9M</b> vues</span><span class="card-stat"><b>196k</b> likes</span></div>
         </div>
       </div>
+
       <div class="card">
         <div class="card-bg" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div>
         <div class="card-gradient"></div>
@@ -321,7 +336,7 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
           <div class="card-stats"><span class="card-stat"><b>543k</b> vues</span><span class="card-stat"><b>81.4k</b> likes</span></div>
         </div>
       </div>
-      <!-- Card 7 — hidden -->
+
       <div class="card">
         <div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#1f1610)"></div>
         <div class="card-gradient"></div>
@@ -332,6 +347,7 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
           <div class="card-stats"><span class="card-stat"><b>61.9k</b> likes</span></div>
         </div>
       </div>
+
     </div>
     <div class="show-more-wrap"><button class="show-more-btn"><span class="btn-label">Voir plus</span><span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button></div>
   </div>
@@ -345,7 +361,6 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#292524)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DEGY62EIL8Q/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Carrousel · Sevenandseries</div><div class="card-title">Timothée Chalamet — Biopic Bob Dylan</div><div class="card-stats"></div></div></div>
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0a0f1a,#111827)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/C-2HixsOZKR/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Carrousel · Sevenandseries</div><div class="card-title">9 Iconic Scores — John Williams</div><div class="card-stats"><span class="card-stat"><b>2.4k</b> likes</span></div></div></div>
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a2e,#1e293b)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DCw9pDyCluZ/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Lyrics · Sevenandseries</div><div class="card-title">Stromae & Pomme — Ma Meilleure Ennemie (Arcane S2)</div><div class="card-stats"><span class="card-stat"><b>882k</b> vues</span><span class="card-stat"><b>313k</b> likes</span></div></div></div>
-      <!-- Hidden beyond 6 -->
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a1a,#262626)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DDz1DByNtWd/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">News · Sevenandseries</div><div class="card-title">L'équipe Monte-Cristo — Nouveau projet</div><div class="card-stats"></div></div></div>
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0c0a09,#1c1917)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DJBa0ugtohg/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">News · Sevenandseries</div><div class="card-title">Star Wars III — Rédition en salles</div><div class="card-stats"></div></div></div>
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#172554,#1e3a5f)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DFqTOa9udtl/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">News · Sevenandseries</div><div class="card-title">Les 4 Fantastiques: First Steps — Bande-annonce</div><div class="card-stats"></div></div></div>
@@ -371,19 +386,16 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1e293b,#334155)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DRT3LrAjUzT/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation & IA</div><div class="card-title">Silver Surfer — Studio Monotype</div><div class="card-stats"></div></div></div>
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#18181b,#27272a)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DSSYa7ziCyj/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation & IA</div><div class="card-title">Studio Monotype — Design & Animation</div><div class="card-stats"></div></div></div>
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#292524)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DRCUh-SCGwW/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">St Germain — Pochette animée</div><div class="card-stats"></div></div></div>
-      <!-- Hidden beyond 6 -->
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0c0a09,#1c1917)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DSZzjv6jAUk/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">St Germain — Variation</div><div class="card-stats"></div></div></div>
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DSIrg-pCB_p/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">Renaud — Pochette animée</div><div class="card-stats"></div></div></div>
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#7f1d1d,#450a0a)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DNCy2l6iNIM/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation & Design</div><div class="card-title">Comics — Pochette animée</div><div class="card-stats"></div></div></div>
     </div>
     <div class="show-more-wrap"><button class="show-more-btn"><span class="btn-label">Voir plus</span><span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button></div>
   </div>
-
 </section>
 
 <div class="divider"></div>
 
-<!-- METHOD -->
 <section class="method" id="method">
   <div class="method-header">
     <div class="section-label centered reveal">Approche</div>
@@ -399,7 +411,6 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
 
 <div class="divider"></div>
 
-<!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="section-label centered reveal">Contact</div>
   <h2 class="reveal reveal-d1">Un projet ?<br>Parlons-en.</h2>
@@ -452,16 +463,13 @@ tabs.forEach(tab => {
   tab.addEventListener('click', () => {
     const targetId = 'panel-' + tab.dataset.panel;
 
-    // Update active tab
     tabs.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
 
-    // Switch panels with crossfade
     panels.forEach(p => {
       if (p.id === targetId) {
         p.classList.add('active');
         p.classList.remove('is-entering');
-        // Force reflow for animation restart
         void p.offsetWidth;
         p.classList.add('is-entering');
       } else {
@@ -469,7 +477,6 @@ tabs.forEach(tab => {
       }
     });
 
-    // Reset "Voir plus" state of the newly active panel
     const activePanel = document.getElementById(targetId);
     resetShowMore(activePanel);
   });
@@ -484,27 +491,20 @@ function initShowMore(panel) {
   const wrap = panel.querySelector('.show-more-wrap');
   const label = btn.querySelector('.btn-label');
 
-  // Hide button if not enough cards
-  if (cards.length <= limit) {
-    wrap.classList.add('no-overflow');
-  } else {
-    wrap.classList.remove('no-overflow');
-  }
+  if (cards.length <= limit) wrap.classList.add('no-overflow');
+  else wrap.classList.remove('no-overflow');
 
-  // Hide overflow cards
   cards.forEach((card, i) => {
     if (i >= limit) card.classList.add('is-hidden');
     else card.classList.remove('is-hidden', 'is-revealing');
   });
 
-  // Reset button state
   label.textContent = 'Voir plus';
   btn.classList.remove('is-expanded');
   btn._expanded = false;
 
   btn.onclick = () => {
     if (!btn._expanded) {
-      // EXPAND
       const hidden = cards.filter(c => c.classList.contains('is-hidden'));
       hidden.forEach((card, i) => {
         card.classList.remove('is-hidden');
@@ -519,7 +519,6 @@ function initShowMore(panel) {
       btn.classList.add('is-expanded');
       btn._expanded = true;
     } else {
-      // COLLAPSE
       cards.forEach((card, i) => {
         if (i >= limit) {
           card.style.transition = 'opacity .4s var(--ease-smooth), transform .4s var(--ease-smooth)';
@@ -536,7 +535,6 @@ function initShowMore(panel) {
       label.textContent = 'Voir plus';
       btn.classList.remove('is-expanded');
       btn._expanded = false;
-      // Scroll back to works section top
       setTimeout(() => {
         document.getElementById('works').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 450);
@@ -564,10 +562,8 @@ function resetShowMore(panel) {
   btn._expanded = false;
 }
 
-// Init all panels
 panels.forEach(initShowMore);
 
-// ── Smooth anchor scroll ──
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
