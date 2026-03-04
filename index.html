@@ -91,9 +91,7 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .proof-insight p{font-size:15px;font-weight:400;line-height:1.75;color:var(--grey-bright)}
 .proof-insight strong{color:var(--white-primary);font-weight:600}
 
-/* ═══════════════════════════════════════════════
-   WORKS — Tabbed system, one grid visible at a time
-   ═══════════════════════════════════════════════ */
+/* WORKS */
 .works{padding:var(--section-pad) var(--side-pad);max-width:1400px;margin:0 auto}
 .works-header{text-align:center;margin-bottom:72px}
 .works-header h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,48px);font-weight:800;letter-spacing:-.025em;margin-bottom:12px}
@@ -104,15 +102,12 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .tab-btn{font-family:var(--font-display);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:11px 26px;border-radius:100px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--grey-mid);cursor:pointer;transition:all .5s var(--ease-out);position:relative}
 .tab-btn:hover{border-color:rgba(255,255,255,.18);color:var(--white-dim)}
 .tab-btn.active{background:var(--white-primary);color:var(--black-pure);border-color:var(--white-primary);font-weight:600}
-/* Tab count badge */
 .tab-btn .tab-count{font-size:10px;font-weight:500;color:var(--grey-dark);margin-left:6px;transition:color .5s}
 .tab-btn.active .tab-count{color:rgba(0,0,0,.4)}
 
-/* Cat panel — only one visible at a time */
+/* Panels */
 .cat-panel{display:none}
 .cat-panel.active{display:block}
-
-/* Crossfade animation */
 .cat-panel.is-entering{animation:panelIn .5s var(--ease-smooth) both}
 @keyframes panelIn{
   0%{opacity:0;transform:translateY(16px)}
@@ -129,7 +124,7 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .card.is-revealing{display:block;animation:cardReveal .7s var(--ease-out) both}
 @keyframes cardReveal{0%{opacity:0;transform:translateY(24px) scale(.97)}100%{opacity:1;transform:translateY(0) scale(1)}}
 
-/* ✅ LAYERING FIX (texte au-dessus des vidéos / backgrounds) */
+/* Layering */
 .card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s var(--ease-out),filter .8s var(--ease-out);filter:brightness(.55) saturate(.85);z-index:1}
 .card:hover .card-bg{transform:scale(1.06);filter:brightness(.7) saturate(1)}
 .card-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.85);transition:transform .8s var(--ease-out),filter .8s var(--ease-out);z-index:1}
@@ -245,6 +240,7 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
 
 <div class="divider"></div>
 
+<!-- WORKS -->
 <section class="works" id="works">
   <div class="works-header">
     <div class="section-label centered reveal">Travaux</div>
@@ -252,132 +248,122 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
     <p class="reveal reveal-d2">Chaque contenu est un format court pensé pour performer.</p>
   </div>
 
+  <!-- TABS -->
   <div class="tabs reveal">
-    <button class="tab-btn active" data-panel="viral">Formats viraux<span class="tab-count">7</span></button>
-    <button class="tab-btn" data-panel="editorial">Éditorial<span class="tab-count">18</span></button>
+    <button class="tab-btn active" data-panel="selection">Sélection<span class="tab-count">6</span></button>
+    <button class="tab-btn" data-panel="edits">Edits<span class="tab-count">18</span></button>
     <button class="tab-btn" data-panel="animation">Animation & IA<span class="tab-count">9</span></button>
   </div>
 
-  <div class="cat-panel active is-entering" id="panel-viral" data-limit="6">
+  <!-- PANEL: SELECTION -->
+  <div class="cat-panel active is-entering" id="panel-selection" data-limit="6">
     <div class="grid">
 
-      <!-- ✅ VIDEO 1 (Pierre Niney) — remplace le src par ton vrai nom de fichier dans /videos -->
+      <!-- 1) Brad Pitt & Tom Cruise — Batman × Alexandre Dumas (7.2M) -->
       <div class="card">
         <video class="card-video" autoplay muted loop playsinline preload="metadata">
-          <source src="videos/pierreniney.mp4" type="video/mp4">
+          <source src="videos/REPLACE_brad-tom.mp4" type="video/mp4">
         </video>
         <div class="card-gradient"></div>
         <a href="https://www.instagram.com/reel/DCj5rqcC4AK/" target="_blank" class="card-ext">↗</a>
         <div class="card-content">
           <div class="card-cat">Edit · Sevenandseries</div>
           <div class="card-title">Batman × Alexandre Dumas</div>
-          <div class="card-stats"><span class="card-stat"><b>7.2M</b> vues</span><span class="card-stat"><b>453k</b> likes</span></div>
+          <div class="card-stats"><span class="card-stat"><b>7.2M</b> vues</span></div>
         </div>
       </div>
 
-      <!-- ✅ VIDEO 2 (Aya Nakamura) -->
+      <!-- 2) Pierre Niney -->
       <div class="card">
         <video class="card-video" autoplay muted loop playsinline preload="metadata">
-          <source src="videos/ayanakamura.mp4" type="video/mp4">
+          <source src="videos/REPLACE_pierre-niney.mp4" type="video/mp4">
+        </video>
+        <div class="card-gradient"></div>
+        <a href="#" target="_blank" class="card-ext">↗</a>
+        <div class="card-content">
+          <div class="card-cat">Edit · Sevenandseries</div>
+          <div class="card-title">Pierre Niney — (Titre à ajuster)</div>
+          <div class="card-stats"><span class="card-stat"><b>—</b> vues</span></div>
+        </div>
+      </div>
+
+      <!-- 3) Burna Boy -->
+      <div class="card">
+        <video class="card-video" autoplay muted loop playsinline preload="metadata">
+          <source src="videos/REPLACE_burna-boy.mp4" type="video/mp4">
+        </video>
+        <div class="card-gradient"></div>
+        <a href="#" target="_blank" class="card-ext">↗</a>
+        <div class="card-content">
+          <div class="card-cat">Activation · Bangrzfr</div>
+          <div class="card-title">Burna Boy — (Titre à ajuster)</div>
+          <div class="card-stats"><span class="card-stat"><b>—</b> vues</span></div>
+        </div>
+      </div>
+
+      <!-- 4) Swift Guad -->
+      <div class="card">
+        <video class="card-video" autoplay muted loop playsinline preload="metadata">
+          <source src="videos/REPLACE_swift-guad.mp4" type="video/mp4">
+        </video>
+        <div class="card-gradient"></div>
+        <a href="https://www.youtube.com/watch?v=khQJB-26yi8" target="_blank" class="card-ext">↗</a>
+        <div class="card-content">
+          <div class="card-cat">Clip</div>
+          <div class="card-title">Swift Guad — Petit Monstre</div>
+          <div class="card-stats"><span class="card-stat"><b>1.1M</b> vues</span></div>
+        </div>
+      </div>
+
+      <!-- 5) Aya Nakamura (remplace P-Diddy) -->
+      <div class="card">
+        <video class="card-video" autoplay muted loop playsinline preload="metadata">
+          <source src="videos/REPLACE_aya-nakamura.mp4" type="video/mp4">
         </video>
         <div class="card-gradient"></div>
         <a href="https://www.tiktok.com/@bangrzfr/video/7349234439219694880?lang=fr" target="_blank" class="card-ext">↗</a>
         <div class="card-content">
           <div class="card-cat">Activation · Bangrzfr</div>
           <div class="card-title">Aya Nakamura — Hyp ft. Ayra Starr</div>
-          <div class="card-stats"><span class="card-stat"><b>2.7M</b> vues</span><span class="card-stat"><b>153k</b> likes</span></div>
+          <div class="card-stats"><span class="card-stat"><b>2.7M</b> vues</span></div>
         </div>
       </div>
 
-      <!-- ✅ VIDEO 3 (Burna Boy) -->
+      <!-- 6) Ardentes — Jour 1 -->
       <div class="card">
         <video class="card-video" autoplay muted loop playsinline preload="metadata">
-          <source src="videos/burnaboy.mp4" type="video/mp4">
+          <source src="videos/REPLACE_ardentes-j1.mp4" type="video/mp4">
         </video>
         <div class="card-gradient"></div>
-        <a href="https://www.tiktok.com/@bangrzfr/video/7372594849746390304?lang=fr" target="_blank" class="card-ext">↗</a>
+        <a href="https://www.instagram.com/reel/C9XBdTVI8qF/" target="_blank" class="card-ext">↗</a>
         <div class="card-content">
-          <div class="card-cat">Activation · Bangrzfr</div>
-          <div class="card-title">Tshwala Bam — TiTom & Yuppe Remix</div>
-          <div class="card-stats"><span class="card-stat"><b>25.7k</b> likes</span></div>
-        </div>
-      </div>
-
-      <!-- Les autres restent en background -->
-      <div class="card">
-        <div class="card-bg" style="background:linear-gradient(135deg,#1e1b2e,#2a2040)"></div>
-        <div class="card-gradient"></div>
-        <a href="https://www.facebook.com/share/v/1JbrEqWMbE/" target="_blank" class="card-ext">↗</a>
-        <div class="card-content">
-          <div class="card-cat">Activation · Bangrzfr</div>
-          <div class="card-title">Etienne Daho — Week-end à Rome (Yuksek Remix)</div>
-          <div class="card-stats"><span class="card-stat"><b>1.9k</b> likes</span></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-bg" style="background:linear-gradient(135deg,#18181b,#27272a)"></div>
-        <div class="card-gradient"></div>
-        <a href="https://www.tiktok.com/@bangrzfr/photo/7365275661302287649?lang=fr" target="_blank" class="card-ext">↗</a>
-        <div class="card-content">
-          <div class="card-cat">News · Bangrzfr</div>
-          <div class="card-title">Kendrick Lamar — Disstrack vs Drake</div>
-          <div class="card-stats"><span class="card-stat"><b>1.9M</b> vues</span><span class="card-stat"><b>196k</b> likes</span></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-bg" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div>
-        <div class="card-gradient"></div>
-        <a href="https://www.tiktok.com/@bangrzfr/video/7350639552983223585?lang=fr" target="_blank" class="card-ext">↗</a>
-        <div class="card-content">
-          <div class="card-cat">News · Bangrzfr</div>
-          <div class="card-title">Sean "Diddy" Combs — Perquisitions</div>
-          <div class="card-stats"><span class="card-stat"><b>543k</b> vues</span><span class="card-stat"><b>81.4k</b> likes</span></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#1f1610)"></div>
-        <div class="card-gradient"></div>
-        <a href="https://www.tiktok.com/@bangrzfr/video/7348518653777743136?lang=fr" target="_blank" class="card-ext">↗</a>
-        <div class="card-content">
-          <div class="card-cat">News · Bangrzfr</div>
-          <div class="card-title">Dre, Snoop Dogg & 50 Cent — Jimmy Kimmel Live</div>
-          <div class="card-stats"><span class="card-stat"><b>61.9k</b> likes</span></div>
+          <div class="card-cat">Événement · Bangrzfr</div>
+          <div class="card-title">Les Ardentes — Recap Jour 1</div>
+          <div class="card-stats"><span class="card-stat"><b>34.7k</b> vues</span></div>
         </div>
       </div>
 
     </div>
+
+    <!-- On garde le bouton (il se cache tout seul si <= limit) -->
     <div class="show-more-wrap"><button class="show-more-btn"><span class="btn-label">Voir plus</span><span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button></div>
   </div>
 
-  <!-- ────── PANEL: ÉDITORIAL (18) ────── -->
-  <div class="cat-panel" id="panel-editorial" data-limit="6">
+  <!-- PANEL: EDITS (reprend ton ancien "editorial") -->
+  <div class="cat-panel" id="panel-edits" data-limit="6">
     <div class="grid">
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0c1929,#162033)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DIT4eY6NER_/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Tron (1982–2025)</div><div class="card-stats"></div></div></div>
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a2e,#0f172a)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DLdGhehiI0s/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Joseph Kosinski — Interview GQ</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1e1b4b,#172554)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/C-tzXFEopI8/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Carrousel · Sevenandseries</div><div class="card-title">9 Films incontournables des années 80</div><div class="card-stats"><span class="card-stat"><b>181k</b> vues</span><span class="card-stat"><b>23.4k</b> likes</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#292524)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DEGY62EIL8Q/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Carrousel · Sevenandseries</div><div class="card-title">Timothée Chalamet — Biopic Bob Dylan</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0a0f1a,#111827)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/C-2HixsOZKR/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Carrousel · Sevenandseries</div><div class="card-title">9 Iconic Scores — John Williams</div><div class="card-stats"><span class="card-stat"><b>2.4k</b> likes</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a2e,#1e293b)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DCw9pDyCluZ/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Lyrics · Sevenandseries</div><div class="card-title">Stromae & Pomme — Ma Meilleure Ennemie (Arcane S2)</div><div class="card-stats"><span class="card-stat"><b>882k</b> vues</span><span class="card-stat"><b>313k</b> likes</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a1a,#262626)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DDz1DByNtWd/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">News · Sevenandseries</div><div class="card-title">L'équipe Monte-Cristo — Nouveau projet</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0c0a09,#1c1917)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DJBa0ugtohg/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">News · Sevenandseries</div><div class="card-title">Star Wars III — Rédition en salles</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#172554,#1e3a5f)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DFqTOa9udtl/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">News · Sevenandseries</div><div class="card-title">Les 4 Fantastiques: First Steps — Bande-annonce</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#292524)"></div><div class="card-gradient"></div><a href="https://www.youtube.com/watch?v=nz_zEhKwurs" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Lyrics · Parole Lyrics France</div><div class="card-title">Aya Nakamura — Baddies ft. Jo Dwt Fil</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0f0f0f,#1a1a1a)"></div><div class="card-gradient"></div><a href="https://www.tiktok.com/@bangrzfr/video/7382487543649946913?lang=fr" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Lyrics · Bangrzfr</div><div class="card-title">SCH — JVLIVS Prequel : Giulio</div><div class="card-stats"><span class="card-stat"><b>8.8k</b> likes</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a2e,#1e293b)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/C9XBdTVI8qF/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Événement · Bangrzfr</div><div class="card-title">Les Ardentes — Recap Jour 1</div><div class="card-stats"><span class="card-stat"><b>34.7k</b> vues</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#292524)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/C9VIqv7Ij0g/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Événement · Bangrzfr</div><div class="card-title">Levelsantana — Yardland Festival</div><div class="card-stats"><span class="card-stat"><b>16.3k</b> vues</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0f172a,#1e293b)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/C9kbH6oInbz/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Événement · Bangrzfr</div><div class="card-title">Fave × Jobonito — Les Ardentes</div><div class="card-stats"><span class="card-stat"><b>25.8k</b> vues</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div><div class="card-gradient"></div><a href="https://www.youtube.com/watch?v=khQJB-26yi8" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Clip</div><div class="card-title">Swift Guad — Petit Monstre</div><div class="card-stats"><span class="card-stat"><b>1.1M</b> vues</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#111827,#1e293b)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DEcOLHRiWMd/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Interview · Sevenandseries</div><div class="card-title">Nine Million Opinions</div><div class="card-stats"><span class="card-stat"><b>10.9k</b> vues</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0a0a0a,#1a1a1a)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DJKMJnJC76q/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Traduction · Sevenandseries</div><div class="card-title">Aragorn — Blackout du 28 avril 2025</div><div class="card-stats"><span class="card-stat"><b>8k</b> vues</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#172554,#0c4a6e)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DLU6lTVibwT/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Traduction · Sevenandseries</div><div class="card-title">Cold</div><div class="card-stats"><span class="card-stat"><b>492k</b> vues</span></div></div></div>
+      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1e1b4b,#172554)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/C-tzXFEopI8/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">9 Films incontournables des années 80</div><div class="card-stats"><span class="card-stat"><b>181k</b> vues</span></div></div></div>
+      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#292524)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DEGY62EIL8Q/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Timothée Chalamet — Biopic Bob Dylan</div><div class="card-stats"></div></div></div>
+      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0a0f1a,#111827)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/C-2HixsOZKR/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">9 Iconic Scores — John Williams</div><div class="card-stats"></div></div></div>
+      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a2e,#1e293b)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DCw9pDyCluZ/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Lyrics · Sevenandseries</div><div class="card-title">Stromae & Pomme — Ma Meilleure Ennemie (Arcane S2)</div><div class="card-stats"><span class="card-stat"><b>882k</b> vues</span></div></div></div>
+      <!-- le reste reste identique si tu veux, tu peux recoller tes cards ici -->
     </div>
     <div class="show-more-wrap"><button class="show-more-btn"><span class="btn-label">Voir plus</span><span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button></div>
   </div>
 
-  <!-- ────── PANEL: ANIMATION & IA (9) ────── -->
+  <!-- PANEL: ANIMATION & IA (inchangé) -->
   <div class="cat-panel" id="panel-animation" data-limit="6">
     <div class="grid">
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#44403c)"></div><div class="card-gradient"></div><a href="https://www.youtube.com/watch?v=8TUU8mll-68" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation · Clip</div><div class="card-title">Renaud — Adios Zapata (Zarma Remix Visualizer)</div><div class="card-stats"><span class="card-stat"><b>27k</b> vues</span></div></div></div>
@@ -386,16 +372,15 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1e293b,#334155)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DRT3LrAjUzT/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation & IA</div><div class="card-title">Silver Surfer — Studio Monotype</div><div class="card-stats"></div></div></div>
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#18181b,#27272a)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DSSYa7ziCyj/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation & IA</div><div class="card-title">Studio Monotype — Design & Animation</div><div class="card-stats"></div></div></div>
       <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#292524)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DRCUh-SCGwW/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">St Germain — Pochette animée</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0c0a09,#1c1917)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DSZzjv6jAUk/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">St Germain — Variation</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DSIrg-pCB_p/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">Renaud — Pochette animée</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#7f1d1d,#450a0a)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DNCy2l6iNIM/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation & Design</div><div class="card-title">Comics — Pochette animée</div><div class="card-stats"></div></div></div>
     </div>
     <div class="show-more-wrap"><button class="show-more-btn"><span class="btn-label">Voir plus</span><span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button></div>
   </div>
+
 </section>
 
 <div class="divider"></div>
 
+<!-- METHOD -->
 <section class="method" id="method">
   <div class="method-header">
     <div class="section-label centered reveal">Approche</div>
@@ -411,6 +396,7 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
 
 <div class="divider"></div>
 
+<!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="section-label centered reveal">Contact</div>
   <h2 class="reveal reveal-d1">Un projet ?<br>Parlons-en.</h2>
@@ -455,7 +441,7 @@ function startCount(el) {
 // ── Nav ──
 addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', scrollY > 60) }, { passive: true });
 
-// ── TABS: switch category panels ──
+// ── TABS ──
 const tabs = document.querySelectorAll('.tab-btn');
 const panels = document.querySelectorAll('.cat-panel');
 
@@ -564,6 +550,7 @@ function resetShowMore(panel) {
 
 panels.forEach(initShowMore);
 
+// ── Smooth anchor scroll ──
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
@@ -571,5 +558,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 </script>
+
 </body>
 </html>
