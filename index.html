@@ -48,83 +48,573 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .stagger-child{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease-smooth),transform .8s var(--ease-smooth)}
 .stagger-child:nth-child(1){transition-delay:.05s}.stagger-child:nth-child(2){transition-delay:.12s}.stagger-child:nth-child(3){transition-delay:.19s}.stagger-child:nth-child(4){transition-delay:.26s}.stagger-child:nth-child(5){transition-delay:.33s}.stagger-child:nth-child(6){transition-delay:.4s}
 
-/* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px var(--side-pad) 80px;position:relative}
-.hero::before{content:'';position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(255,255,255,.015) 0%,transparent 70%);pointer-events:none}
-.hero-label{font-family:var(--font-display);font-size:12px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:40px;display:flex;align-items:center;gap:16px}
-.hero-label::before,.hero-label::after{content:'';width:24px;height:1px;background:var(--grey-dark)}
-.hero-name{font-family:var(--font-display);font-size:clamp(52px,8.5vw,130px);font-weight:900;line-height:.92;letter-spacing:-.035em;text-transform:uppercase;margin-bottom:48px;background:linear-gradient(180deg,var(--white-pure) 0%,var(--white-primary) 40%,var(--grey-bright) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-metric{display:flex;align-items:baseline;gap:14px;margin-bottom:28px}
-.hero-metric .number{font-family:var(--font-display);font-size:clamp(44px,5.5vw,76px);font-weight:800;color:var(--white-pure);line-height:1;letter-spacing:-.03em}
-.hero-metric .unit{font-family:var(--font-body);font-size:15px;font-weight:400;color:var(--grey-mid);letter-spacing:.02em}
-.hero-tagline{font-size:17px;font-weight:400;color:var(--grey-light);max-width:480px;line-height:1.75;margin-bottom:56px}
-.hero-cta{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--white-primary);padding:18px 44px;border:1px solid rgba(255,255,255,.12);border-radius:100px;transition:all .5s var(--ease-out);cursor:pointer;background:transparent}
+/* ═══════════════════════════════════════════════
+   HERO — Variant B: Stat-first + Video Wall BG
+   ═══════════════════════════════════════════════ */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  padding:120px var(--side-pad) 80px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* ── VIDEO WALL BACKGROUND ── */
+.hero-video-wall{
+  position:absolute;
+  inset:0;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  padding:0 10px;
+  z-index:0;
+  opacity:0;
+  animation:wallFadeIn 2s 0.5s var(--ease-smooth) forwards;
+}
+
+@keyframes wallFadeIn{
+  to{opacity:1}
+}
+
+.hero-video-col{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  width:calc((100% - 40px) / 5);
+  min-width:160px;
+  max-width:240px;
+  flex-shrink:0;
+}
+
+/* Each column scrolls upward infinitely */
+.hero-video-col .col-inner{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  animation:scrollUp var(--scroll-speed, 30s) linear infinite;
+}
+
+@keyframes scrollUp{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(-50%)}
+}
+
+.hero-video-col:nth-child(1) .col-inner{animation-duration:35s}
+.hero-video-col:nth-child(2) .col-inner{animation-duration:28s;animation-delay:-8s}
+.hero-video-col:nth-child(3) .col-inner{animation-duration:32s;animation-delay:-4s}
+.hero-video-col:nth-child(4) .col-inner{animation-duration:26s;animation-delay:-12s}
+.hero-video-col:nth-child(5) .col-inner{animation-duration:38s;animation-delay:-6s}
+
+.hero-video-col video{
+  width:100%;
+  aspect-ratio:9/16;
+  object-fit:cover;
+  border-radius:12px;
+  display:block;
+  background:var(--surface-1);
+}
+
+/* Dark overlay + blur over the video wall */
+.hero-video-overlay{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:
+    radial-gradient(ellipse at center, rgba(5,5,5,.65), rgba(5,5,5,.85) 70%),
+    linear-gradient(180deg, rgba(5,5,5,.4) 0%, rgba(5,5,5,.2) 40%, rgba(5,5,5,.4) 60%, rgba(5,5,5,.95) 100%);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+}
+
+/* All hero content sits above the wall */
+.hero-label,
+.hero-stat-line,
+.hero-stat-label,
+.hero-divider,
+.hero-tagline,
+.hero-byline,
+.hero-cta,
+.hero-availability,
+.scroll-hint{
+  position:relative;
+  z-index:2;
+}
+
+.hero-label{
+  font-family:var(--font-display);
+  font-size:14px;
+  font-weight:500;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--grey-light);
+  margin-bottom:28px;
+}
+
+/* The stat IS the headline */
+.hero-stat-line{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  margin-bottom:16px;
+}
+
+.hero-number{
+  font-family:var(--font-display);
+  font-size:clamp(64px,9vw,120px);
+  font-weight:900;
+  color:var(--white-pure);
+  line-height:.85;
+  letter-spacing:-.05em;
+}
+
+.hero-suffix{
+  font-family:var(--font-display);
+  font-size:clamp(20px,2.5vw,36px);
+  font-weight:300;
+  color:var(--grey-bright);
+  letter-spacing:-.01em;
+  align-self:flex-end;
+  padding-bottom:.1em;
+}
+
+.hero-stat-label{
+  font-family:var(--font-display);
+  font-size:13px;
+  font-weight:400;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--grey-mid);
+  margin-bottom:56px;
+}
+
+/* No more divider line — Apple never uses them in heroes */
+.hero-divider{
+  display:none;
+}
+
+.hero-tagline{
+  font-family:var(--font-display);
+  font-size:clamp(18px,2.2vw,28px);
+  font-weight:500;
+  line-height:1.45;
+  letter-spacing:-.01em;
+  color:var(--white-primary);
+  max-width:520px;
+  margin-bottom:12px;
+}
+
+.hero-tagline .em{
+  color:var(--grey-light);
+  font-weight:400;
+}
+
+.hero-byline{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:48px;
+}
+
+.hero-byline-name{
+  font-family:var(--font-display);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--grey-bright);
+}
+
+.hero-byline-dot{
+  width:3px;height:3px;border-radius:50%;
+  background:var(--grey-dark);
+}
+
+.hero-byline-location{
+  font-family:var(--font-display);
+  font-size:12px;
+  font-weight:400;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--grey-mid);
+}
+
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-display);font-size:12px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--white-primary);padding:18px 44px;
+  border:1px solid rgba(255,255,255,.12);border-radius:100px;
+  transition:all .5s var(--ease-out);cursor:pointer;background:transparent;
+}
 .hero-cta:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.25);transform:translateY(-2px);box-shadow:0 8px 40px rgba(255,255,255,.03)}
 .hero-cta .arrow{display:inline-block;transition:transform .4s var(--ease-out)}
 .hero-cta:hover .arrow{transform:translateY(3px)}
+
 .scroll-hint{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px}
 .scroll-line{width:1px;height:48px;position:relative;overflow:hidden}
 .scroll-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:linear-gradient(to bottom,transparent,var(--grey-mid),transparent);animation:scroll-drop 2.2s var(--ease-apple) infinite}
 @keyframes scroll-drop{0%{top:-100%}100%{top:200%}}
 
-/* DIVIDER */
-.divider{width:100%;max-width:1200px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.04) 50%,transparent 100%)}
+/* Hide wall on very small screens for performance */
+@media(max-width:540px){
+  .hero-video-wall{display:none}
+  .hero-video-overlay{background:none;backdrop-filter:none}
+}
 
-/* SECTION LABEL */
+.divider{width:100%;max-width:1200px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.04) 50%,transparent 100%)}
 .section-label{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:48px;display:flex;align-items:center;gap:16px}
 .section-label::before{content:'';width:28px;height:1px;background:var(--grey-dark)}
 .section-label.centered{justify-content:center}
 .section-label.centered::after{content:'';width:28px;height:1px;background:var(--grey-dark)}
 
-/* PROOF */
-.proof{padding:var(--section-pad) var(--side-pad);max-width:1200px;margin:0 auto}
-.proof-header{margin-bottom:72px}
-.proof-header h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,48px);font-weight:800;line-height:1.15;letter-spacing:-.025em;margin-bottom:24px}
-.proof-header h2 .thin{font-weight:300;color:var(--grey-bright)}
-.proof-context{font-size:16px;font-weight:400;color:var(--grey-light);max-width:600px;line-height:1.8}
-.proof-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-bottom:56px;background:rgba(255,255,255,.03);border-radius:20px;overflow:hidden}
-.metric{background:var(--surface-1);padding:52px 40px;text-align:center;transition:background .6s var(--ease-apple)}
-.metric:hover{background:var(--surface-2)}
-.metric-number{font-family:var(--font-display);font-size:clamp(32px,4vw,52px);font-weight:800;color:var(--white-pure);line-height:1;margin-bottom:14px;letter-spacing:-.03em}
-.metric-label{font-family:var(--font-display);font-size:12px;color:var(--grey-mid);letter-spacing:.08em;text-transform:uppercase;font-weight:500}
-.proof-insight{padding:28px 36px;background:var(--surface-1);border-left:2px solid var(--grey-dark);border-radius:0 16px 16px 0}
-.proof-insight p{font-size:15px;font-weight:400;line-height:1.75;color:var(--grey-bright)}
-.proof-insight strong{color:var(--white-primary);font-weight:600}
+/* ═══════════════════════════════════════════════════════
+   PROOF V5 — Redesigned Case Study
+   
+   Changes from V4:
+   1. Split layout: narrative left + hero metric right
+   2. Animated progress bar for ×20 ratio (visual proof)
+   3. Before/After comparison row (reposts vs originals)
+   4. Tighter vertical rhythm, better scan-ability
+   5. Metric cards with animated count-up on scroll
+   6. Subtle glow pulse on the hero number
+   ═══════════════════════════════════════════════════════ */
+.proof{
+  padding:var(--section-pad) var(--side-pad);
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.proof-shell{
+  position:relative;
+  border-radius:28px;
+  background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 24px 80px rgba(0,0,0,.4);
+  overflow:hidden;
+}
+
+/* Ambient light reflections */
+.proof-shell::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(255,255,255,.06), transparent 40%),
+    radial-gradient(ellipse at 85% 100%, rgba(255,255,255,.03), transparent 35%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── TOP: Split layout ── */
+.proof-top{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:32px;
+  align-items:end;
+  padding:36px 36px 0;
+}
+
+.proof-narrative{
+  max-width:580px;
+}
+
+.proof-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  margin-bottom:24px;
+  border-radius:999px;
+  font-family:var(--font-display);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--grey-bright);
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.proof-badge-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--white-primary);
+  animation:dot-pulse 2.4s ease infinite;
+}
+
+@keyframes dot-pulse{
+  0%,100%{opacity:.4;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.3)}
+}
+
+.proof-title{
+  font-family:var(--font-display);
+  font-size:clamp(26px,3.5vw,46px);
+  font-weight:800;
+  line-height:1.1;
+  letter-spacing:-.03em;
+  margin-bottom:18px;
+}
+
+.proof-title .thin{
+  font-weight:300;
+  color:var(--grey-bright);
+}
+
+.proof-context{
+  font-size:15px;
+  font-weight:400;
+  color:var(--grey-light);
+  line-height:1.75;
+  max-width:520px;
+}
+
+/* Hero metric — the big number on the right */
+.proof-hero-metric{
+  text-align:right;
+  padding-bottom:12px;
+  position:relative;
+}
+
+.proof-hero-number{
+  font-family:var(--font-display);
+  font-size:clamp(56px,7vw,88px);
+  font-weight:900;
+  color:var(--white-pure);
+  line-height:.85;
+  letter-spacing:-.05em;
+  position:relative;
+}
+
+/* Subtle glow behind the big number */
+.proof-hero-number::after{
+  content:'';
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:200px;
+  height:120px;
+  background:radial-gradient(ellipse,rgba(255,255,255,.06),transparent 70%);
+  pointer-events:none;
+  z-index:-1;
+}
+
+.proof-hero-unit{
+  font-family:var(--font-display);
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--grey-mid);
+  margin-top:10px;
+}
+
+/* ── METRICS ROW ── */
+.proof-metrics{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  margin:32px 0 0;
+  background:rgba(255,255,255,.03);
+}
+
+.metric{
+  padding:28px 24px;
+  background:rgba(255,255,255,.02);
+  transition:background .5s var(--ease-apple);
+  text-align:center;
+}
+
+.metric:hover{
+  background:rgba(255,255,255,.04);
+}
+
+.metric-kicker{
+  font-family:var(--font-display);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--grey-mid);
+  margin-bottom:12px;
+}
+
+.metric-number{
+  font-family:var(--font-display);
+  font-size:clamp(26px,2.8vw,38px);
+  font-weight:800;
+  color:var(--white-pure);
+  line-height:1;
+  letter-spacing:-.03em;
+  margin-bottom:6px;
+}
+
+.metric-label{
+  font-family:var(--font-display);
+  font-size:10px;
+  color:var(--grey-bright);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:500;
+}
+
+/* ── COMPARISON BAR — Visual proof ── */
+.proof-compare{
+  position:relative;
+  z-index:1;
+  padding:28px 36px 32px;
+}
+
+.compare-label{
+  font-family:var(--font-display);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--grey-mid);
+  margin-bottom:20px;
+}
+
+.compare-row{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.compare-bar{
+  display:grid;
+  grid-template-columns:140px 1fr auto;
+  align-items:center;
+  gap:16px;
+}
+
+.compare-bar-label{
+  font-family:var(--font-display);
+  font-size:12px;
+  font-weight:500;
+  color:var(--grey-bright);
+  letter-spacing:.02em;
+}
+
+.compare-bar-track{
+  height:6px;
+  border-radius:100px;
+  background:rgba(255,255,255,.04);
+  overflow:hidden;
+  position:relative;
+}
+
+.compare-bar-fill{
+  height:100%;
+  border-radius:100px;
+  background:var(--white-primary);
+  transform-origin:left;
+  transform:scaleX(0);
+  transition:transform 1.8s var(--ease-out);
+}
+
+.compare-bar-fill.animated{
+  transform:scaleX(1);
+}
+
+/* Dimmer fill for reposts */
+.compare-bar--dim .compare-bar-fill{
+  background:rgba(255,255,255,.15);
+}
+
+.compare-bar-value{
+  font-family:var(--font-display);
+  font-size:13px;
+  font-weight:700;
+  color:var(--white-dim);
+  min-width:50px;
+  text-align:right;
+  letter-spacing:-.01em;
+}
+
+.compare-bar--bright .compare-bar-value{
+  color:var(--white-pure);
+}
+
+/* ── INSIGHT FOOTER ── */
+.proof-insight{
+  position:relative;
+  z-index:1;
+  margin:24px 36px 36px;
+  padding:20px 24px;
+  border-radius:14px;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.04);
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.proof-insight-icon{
+  flex-shrink:0;
+  width:18px;
+  height:18px;
+  color:var(--grey-mid);
+}
+
+.proof-insight p{
+  font-size:13px;
+  line-height:1.65;
+  color:var(--grey-light);
+}
+
+.proof-insight strong{
+  color:var(--white-primary);
+  font-weight:600;
+}
+
+/* ── PROOF RESPONSIVE ── */
+@media(max-width:768px){
+  .proof-shell{border-radius:22px}
+  .proof-top{
+    grid-template-columns:1fr;
+    gap:24px;
+    padding:28px 24px 0;
+  }
+  .proof-hero-metric{text-align:left;padding-bottom:0}
+  .proof-hero-number{font-size:clamp(48px,12vw,68px)}
+  .proof-metrics{grid-template-columns:1fr}
+  .proof-compare{padding:24px 24px 28px}
+  .compare-bar{grid-template-columns:100px 1fr auto;gap:12px}
+  .proof-insight{margin:0 24px 28px;gap:10px}
+}
+
+/* ═══════════════ REST OF SITE (unchanged from document) ═══════════════ */
 
 /* WORKS */
 .works{padding:var(--section-pad) var(--side-pad);max-width:1400px;margin:0 auto}
 .works-header{text-align:center;margin-bottom:72px}
 .works-header h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,48px);font-weight:800;letter-spacing:-.025em;margin-bottom:12px}
 .works-header p{font-size:16px;color:var(--grey-light);font-weight:400}
-
-/* Tabs row */
 .tabs{display:flex;justify-content:center;gap:6px;margin-bottom:56px;flex-wrap:wrap}
 .tab-btn{font-family:var(--font-display);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:11px 26px;border-radius:100px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--grey-mid);cursor:pointer;transition:all .5s var(--ease-out);position:relative}
 .tab-btn:hover{border-color:rgba(255,255,255,.18);color:var(--white-dim)}
 .tab-btn.active{background:var(--white-primary);color:var(--black-pure);border-color:var(--white-primary);font-weight:600}
 .tab-btn .tab-count{font-size:10px;font-weight:500;color:var(--grey-dark);margin-left:6px;transition:color .5s}
 .tab-btn.active .tab-count{color:rgba(0,0,0,.4)}
-
-/* Panels */
 .cat-panel{display:none}
 .cat-panel.active{display:block}
 .cat-panel.is-entering{animation:panelIn .5s var(--ease-smooth) both}
-@keyframes panelIn{
-  0%{opacity:0;transform:translateY(16px)}
-  100%{opacity:1;transform:translateY(0)}
-}
-
-/* Grid */
+@keyframes panelIn{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-
-/* Cards */
 .card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:9/12;background:var(--surface-1);cursor:pointer;transition:transform .6s var(--ease-out),opacity .6s var(--ease-smooth)}
 .card:hover{transform:translateY(-4px)}
 .card.is-hidden{display:none}
 .card.is-revealing{display:block;animation:cardReveal .7s var(--ease-out) both}
 @keyframes cardReveal{0%{opacity:0;transform:translateY(24px) scale(.97)}100%{opacity:1;transform:translateY(0) scale(1)}}
-
-/* Layering */
 .card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s var(--ease-out),filter .8s var(--ease-out);filter:brightness(.55) saturate(.85);z-index:1}
 .card:hover .card-bg{transform:scale(1.06);filter:brightness(.7) saturate(1)}
 .card-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.85);transition:transform .8s var(--ease-out),filter .8s var(--ease-out);z-index:1}
@@ -135,14 +625,11 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .card-ext{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;font-size:14px;opacity:0;transform:translateY(6px) scale(.9);transition:all .5s var(--ease-out);z-index:4}
 .card:hover .card-ext{opacity:1;transform:translateY(0) scale(1)}
 .card-ext:hover{background:rgba(255,255,255,.15)}
-
 .card-cat{font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--grey-bright);margin-bottom:8px}
 .card-title{font-family:var(--font-display);font-size:16px;font-weight:700;line-height:1.3;margin-bottom:10px;letter-spacing:-.01em}
 .card-stats{display:flex;gap:16px;flex-wrap:wrap}
 .card-stat{font-size:12px;color:var(--grey-mid);font-weight:400}
 .card-stat b{color:var(--white-dim);font-weight:600}
-
-/* Show more button */
 .show-more-wrap{display:flex;justify-content:center;margin-top:36px}
 .show-more-wrap.no-overflow{display:none}
 .show-more-btn{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-bright);background:transparent;border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:14px 36px;cursor:pointer;transition:all .5s var(--ease-out);display:inline-flex;align-items:center;gap:10px}
@@ -152,18 +639,230 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .show-more-btn.is-expanded .btn-icon{transform:rotate(180deg)}
 .show-more-btn.is-expanded:hover .btn-icon{transform:rotate(180deg) translateY(2px)}
 
-/* METHOD */
-.method{padding:var(--section-pad) var(--side-pad);max-width:1100px;margin:0 auto}
-.method-header{text-align:center;margin-bottom:72px}
-.method-header h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,48px);font-weight:800;letter-spacing:-.025em;margin-bottom:12px}
-.method-header p{font-size:16px;color:var(--grey-light);font-weight:400;max-width:420px;margin:0 auto}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.03);border-radius:20px;overflow:hidden}
-.step-card{background:var(--surface-1);padding:52px 36px;position:relative;overflow:hidden;transition:background .6s var(--ease-apple)}
-.step-card:hover{background:var(--surface-2)}
-.step-num{font-family:var(--font-display);font-size:72px;font-weight:900;color:rgba(255,255,255,.025);position:absolute;top:16px;right:24px;line-height:1;letter-spacing:-.05em;transition:color .6s var(--ease-apple)}
-.step-card:hover .step-num{color:rgba(255,255,255,.04)}
-.step-title{font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:18px;letter-spacing:-.01em}
-.step-desc{font-size:14px;font-weight:400;color:var(--grey-light);line-height:1.8}
+/* ═══════════════════════════════════════════════
+   METHOD — Variant C: Timeline système (Linear-style)
+   Connected vertical line + nodes + deliverable tags
+   ═══════════════════════════════════════════════ */
+.method{
+  padding:var(--section-pad) var(--side-pad);
+  max-width:900px;
+  margin:0 auto;
+}
+
+.method-header{text-align:center;margin-bottom:80px}
+
+.method-header h2{
+  font-family:var(--font-display);
+  font-size:clamp(28px,3.5vw,48px);
+  font-weight:800;
+  letter-spacing:-.03em;
+  margin-bottom:14px;
+}
+
+.method-header p{
+  font-size:16px;
+  color:var(--grey-light);
+  max-width:440px;
+  margin:0 auto;
+  line-height:1.7;
+}
+
+/* Timeline container */
+.mc-timeline{
+  position:relative;
+  padding-left:48px;
+}
+
+/* The connecting line */
+.mc-timeline::before{
+  content:'';
+  position:absolute;
+  left:11px;
+  top:8px;
+  bottom:8px;
+  width:1px;
+  background:linear-gradient(
+    to bottom,
+    rgba(255,255,255,.12),
+    rgba(255,255,255,.06) 50%,
+    rgba(255,255,255,.02)
+  );
+}
+
+.mc-node{
+  position:relative;
+  padding:0 0 56px;
+}
+
+.mc-node:last-child{padding-bottom:0}
+
+/* The dot on the timeline */
+.mc-node::before{
+  content:'';
+  position:absolute;
+  left:-48px;
+  top:8px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:var(--black-deep);
+  border:2px solid rgba(255,255,255,.12);
+  transition:border-color .5s var(--ease-out), box-shadow .5s var(--ease-out);
+  z-index:1;
+}
+
+/* Inner dot */
+.mc-node::after{
+  content:'';
+  position:absolute;
+  left:-41px;
+  top:15px;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:rgba(255,255,255,.25);
+  transition:background .5s var(--ease-out), transform .5s var(--ease-out);
+  z-index:2;
+}
+
+.mc-node:hover::before{
+  border-color:rgba(255,255,255,.3);
+  box-shadow:0 0 20px rgba(255,255,255,.06);
+}
+
+.mc-node:hover::after{
+  background:var(--white-primary);
+  transform:scale(1.2);
+}
+
+.mc-node-phase{
+  font-family:var(--font-display);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--grey-mid);
+  margin-bottom:10px;
+}
+
+.mc-node-title{
+  font-family:var(--font-display);
+  font-size:clamp(20px,2.5vw,28px);
+  font-weight:700;
+  letter-spacing:-.02em;
+  margin-bottom:14px;
+  line-height:1.2;
+}
+
+.mc-node-desc{
+  font-size:15px;
+  color:var(--grey-light);
+  line-height:1.75;
+  max-width:540px;
+  margin-bottom:18px;
+}
+
+/* Deliverable tags */
+.mc-node-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.mc-tag{
+  font-family:var(--font-display);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.06em;
+  color:var(--grey-bright);
+  padding:6px 14px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:100px;
+  transition:all .4s var(--ease-out);
+}
+
+.mc-tag:hover{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.1);
+  color:var(--white-dim);
+}
+
+/* Result block at the bottom */
+.mc-result{
+  position:relative;
+  margin-top:48px;
+  padding:24px 28px;
+  border-radius:16px;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.04);
+  margin-left:-48px;
+}
+
+.mc-result p{
+  font-size:14px;
+  color:var(--grey-light);
+  line-height:1.7;
+}
+
+.mc-result strong{
+  color:var(--white-primary);
+  font-weight:600;
+}
+
+@media(max-width:600px){
+  .mc-timeline{padding-left:36px}
+  .mc-timeline::before{left:7px}
+  .mc-node::before{left:-36px;width:16px;height:16px}
+  .mc-node::after{left:-31px;top:12px;width:6px;height:6px}
+  .mc-result{margin-left:-36px}
+}
+
+/* ═══════════════════════════════════════════════
+   PROOF 2 — Sevenandseries (reuses proof-shell)
+   ═══════════════════════════════════════════════ */
+.proof-2{
+  padding:0 var(--side-pad) var(--section-pad);
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.proof-2 .proof-shell{margin-top:0}
+
+.proof-2-metrics{
+  position:relative;z-index:1;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  margin:36px 0 0;
+  background:rgba(255,255,255,.03);
+}
+
+/* CDI signal badge in hero */
+.hero-availability{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-family:var(--font-display);
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--grey-mid);
+  margin-top:16px;
+}
+
+.hero-availability-dot{
+  width:5px;height:5px;
+  border-radius:50%;
+  background:#34d399;
+  animation:avail-pulse 2.4s ease infinite;
+}
+
+@keyframes avail-pulse{
+  0%,100%{opacity:.5;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.3)}
+}
 
 /* CONTACT */
 .contact{padding:var(--section-pad) var(--side-pad) 80px;text-align:center;position:relative}
@@ -179,9 +878,8 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .contact-item:hover svg{opacity:.8}
 footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-display);font-size:11px;color:var(--grey-dark);letter-spacing:.06em}
 
-/* RESPONSIVE */
 @media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}}
-@media(max-width:768px){.proof-metrics{grid-template-columns:1fr;border-radius:16px}.steps{grid-template-columns:1fr;border-radius:16px}.nav-links{gap:24px}.grid{grid-template-columns:repeat(2,1fr);gap:10px}.card{aspect-ratio:9/13}}
+@media(max-width:768px){.steps{grid-template-columns:1fr;border-radius:16px}.nav-links{gap:24px}.grid{grid-template-columns:repeat(2,1fr);gap:10px}.card{aspect-ratio:9/13}}
 @media(max-width:540px){.grid{grid-template-columns:1fr;gap:12px}.card{aspect-ratio:9/12}.nav-links{display:none}.contact-meta{flex-direction:column;align-items:center;gap:16px}.tabs{gap:4px}.tab-btn{padding:9px 16px;font-size:11px}}
 </style>
 </head>
@@ -190,207 +888,352 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
 <nav id="nav">
   <div class="nav-logo">Tao Le Gia</div>
   <ul class="nav-links">
-    <li><a href="#proof">Cas client</a></li>
+    <li><a href="#proof">Cas clients</a></li>
     <li><a href="#works">Travaux</a></li>
     <li><a href="#method">Méthode</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
+<!-- HERO — Stat-first + Video Wall -->
 <section class="hero" id="hero">
-  <div class="hero-label reveal reveal-d1">Short-Form Strategist · Paris</div>
-  <h1 class="hero-name reveal reveal-d2">Tao<br>Le Gia</h1>
-  <div class="hero-metric reveal reveal-d3">
-    <span class="number count-up" data-target="80" data-suffix="M+">0</span>
-    <span class="unit">de vues en formats courts</span>
+
+  <!-- Video wall background — 5 columns, 3 videos each, duplicated for infinite scroll -->
+  <div class="hero-video-wall" aria-hidden="true">
+    <div class="hero-video-col"><div class="col-inner">
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/bradtom.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/Stromae.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/etienne.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/bradtom.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/Stromae.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/etienne.mp4" type="video/mp4"></video>
+    </div></div>
+    <div class="hero-video-col"><div class="col-inner">
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/pierreniney.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/renaud_dessin.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/50Cent.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/pierreniney.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/renaud_dessin.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/50Cent.mp4" type="video/mp4"></video>
+    </div></div>
+    <div class="hero-video-col"><div class="col-inner">
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/Tron.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/ayanakamura.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/bozambo.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/Tron.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/ayanakamura.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/bozambo.mp4" type="video/mp4"></video>
+    </div></div>
+    <div class="hero-video-col"><div class="col-inner">
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/swiftguad.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/KIDS.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/BradPittInterview.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/swiftguad.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/KIDS.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/BradPittInterview.mp4" type="video/mp4"></video>
+    </div></div>
+    <div class="hero-video-col"><div class="col-inner">
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/burnaboy.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/stgermain_balle.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/RenaudAdios.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/burnaboy.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/stgermain_balle.mp4" type="video/mp4"></video>
+      <video autoplay muted loop playsinline preload="metadata"><source src="videos/RenaudAdios.mp4" type="video/mp4"></video>
+    </div></div>
   </div>
-  <p class="hero-tagline reveal reveal-d4">Je conçois des contenus courts qui captent en 3&nbsp;secondes, retiennent l'attention et dominent les feeds.</p>
+
+  <!-- Dark overlay -->
+  <div class="hero-video-overlay"></div>
+
+  <div class="hero-label reveal reveal-d1">Short-Form Strategist</div>
+  <div class="hero-stat-line reveal reveal-d2">
+    <span class="hero-number count-up" data-target="80" data-suffix="">0</span>
+    <span class="hero-suffix">millions de vues</span>
+  </div>
+  <div class="hero-stat-label reveal reveal-d3">En formats courts · TikTok & Instagram</div>
+  <div class="hero-divider reveal reveal-d3"></div>
+  <h1 class="hero-tagline reveal reveal-d4">
+    Stratégie, création, montage. <span class="em">Des formats courts qui performent.</span>
+  </h1>
+  <div class="hero-byline reveal reveal-d4">
+    <span class="hero-byline-name">Tao Le Gia</span>
+    <span class="hero-byline-dot"></span>
+    <span class="hero-byline-location">Paris</span>
+  </div>
   <a href="#works" class="hero-cta reveal reveal-d5">Voir le travail <span class="arrow">↓</span></a>
+  <div class="hero-availability reveal reveal-d5">
+    <span class="hero-availability-dot"></span>
+    Disponible
+  </div>
   <div class="scroll-hint"><div class="scroll-line"></div></div>
 </section>
 
 <div class="divider"></div>
 
-<!-- PROOF -->
+<!-- ═══════════════════════════════════════
+     PROOF V5 — Redesigned Case Study
+     ═══════════════════════════════════════ -->
 <section class="proof" id="proof">
-  <div class="section-label reveal">Cas client</div>
-  <div class="proof-header">
-    <h2 class="reveal reveal-d1">Bangrzfr <span class="thin">× Warner Music France</span></h2>
-    <p class="proof-context reveal reveal-d2">Relancer la présence TikTok d'un média musical majeur. Carte blanche sur la création de contenus originaux en parallèle des reposts Instagram existants.</p>
+  <div class="section-label reveal">Case Study</div>
+
+  <div class="proof-shell reveal">
+
+    <!-- TOP: Narrative + Hero Metric -->
+    <div class="proof-top">
+      <div class="proof-narrative">
+        <div class="proof-badge">
+          <span class="proof-badge-dot"></span>
+          3 mois de mission
+        </div>
+        <h2 class="proof-title reveal reveal-d1">
+          Bangrzfr <span class="thin">× Warner Music France</span>
+        </h2>
+        <p class="proof-context reveal reveal-d2">
+          Relancer la présence TikTok d'un média musical majeur. Carte blanche pour créer des contenus originaux pensés pour la plateforme, en parallèle des reposts Instagram.
+        </p>
+      </div>
+      <div class="proof-hero-metric reveal reveal-d3">
+        <div class="proof-hero-number">
+          <span class="count-up" data-target="10.2" data-suffix="M" data-decimals="1">0</span>
+        </div>
+        <div class="proof-hero-unit">Vues cumulées</div>
+      </div>
+    </div>
+
+    <!-- METRICS ROW -->
+    <div class="proof-metrics stagger-group reveal">
+      <div class="metric stagger-child">
+        <div class="metric-kicker">Croissance</div>
+        <div class="metric-number"><span class="count-up" data-target="30" data-prefix="+" data-suffix="k">0</span></div>
+        <div class="metric-label">Nouveaux abonnés</div>
+      </div>
+      <div class="metric stagger-child">
+        <div class="metric-kicker">Volume</div>
+        <div class="metric-number"><span class="count-up" data-target="40">0</span></div>
+        <div class="metric-label">Créations originales</div>
+      </div>
+      <div class="metric stagger-child">
+        <div class="metric-kicker">Impact</div>
+        <div class="metric-number"><span class="count-up" data-target="20" data-prefix="×">0</span></div>
+        <div class="metric-label">Vs reposts Instagram</div>
+      </div>
+    </div>
+
+    <!-- COMPARISON BARS — Visual proof of ×20 -->
+    <div class="proof-compare reveal" id="proofCompare">
+      <div class="compare-label">Performance comparée</div>
+      <div class="compare-row">
+        <div class="compare-bar compare-bar--dim">
+          <span class="compare-bar-label">103 Reposts</span>
+          <div class="compare-bar-track">
+            <div class="compare-bar-fill" data-width="5"></div>
+          </div>
+          <span class="compare-bar-value">1.1M</span>
+        </div>
+        <div class="compare-bar compare-bar--bright">
+          <span class="compare-bar-label">40 Originaux</span>
+          <div class="compare-bar-track">
+            <div class="compare-bar-fill" data-width="100"></div>
+          </div>
+          <span class="compare-bar-value">10.2M</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSIGHT -->
+    <div class="proof-insight reveal">
+      <svg class="proof-insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+      </svg>
+      <p>
+        Le contenu natif, <strong>pensé pour la plateforme</strong>, surpasse systématiquement le recyclage.
+        Moins de volume, <strong>20× plus d'impact</strong>.
+      </p>
+    </div>
+
   </div>
-  <div class="proof-metrics stagger-group reveal">
-    <div class="metric stagger-child">
-      <div class="metric-number"><span class="count-up" data-target="30" data-prefix="+" data-suffix="k">0</span></div>
-      <div class="metric-label">Abonnés en 3 mois</div>
+</section>
+
+<!-- PROOF 2 — Sevenandseries -->
+<section class="proof-2" id="proof2">
+  <div class="proof-shell reveal">
+
+    <div class="proof-top">
+      <div class="proof-narrative">
+        <div class="proof-badge">
+          <span class="proof-badge-dot"></span>
+          Projet personnel · 12 mois
+        </div>
+        <h2 class="proof-title reveal reveal-d1">
+          @sevenandseries
+        </h2>
+        <p class="proof-context reveal reveal-d2">
+          Compte Instagram cinéma lancé de zéro. Direction éditoriale, création de contenus,
+          branding, traduction. La quasi-totalité de la croissance est organique.
+          Seul investissement publicitaire : 500€ sur l'ensemble du projet, avec un coût par abonné très performant.
+        </p>
+      </div>
+      <div class="proof-hero-metric reveal reveal-d3">
+        <div class="proof-hero-number">
+          <span class="count-up" data-target="50" data-suffix="M+">0</span>
+        </div>
+        <div class="proof-hero-unit">Vues en 12 mois</div>
+      </div>
     </div>
-    <div class="metric stagger-child">
-      <div class="metric-number"><span class="count-up" data-target="10.2" data-suffix="M" data-decimals="1">0</span></div>
-      <div class="metric-label">Vues cumulées</div>
+
+    <div class="proof-metrics stagger-group reveal">
+      <div class="metric stagger-child">
+        <div class="metric-kicker">Audience</div>
+        <div class="metric-number"><span class="count-up" data-target="76" data-suffix="k">0</span></div>
+        <div class="metric-label">Abonnés</div>
+      </div>
+      <div class="metric stagger-child">
+        <div class="metric-kicker">Budget pub</div>
+        <div class="metric-number"><span class="count-up" data-target="500" data-suffix="€">0</span></div>
+        <div class="metric-label">CPA très faible</div>
+      </div>
+      <div class="metric stagger-child">
+        <div class="metric-kicker">Croissance</div>
+        <div class="metric-number">95%+</div>
+        <div class="metric-label">Organique</div>
+      </div>
     </div>
-    <div class="metric stagger-child">
-      <div class="metric-number"><span class="count-up" data-target="20" data-prefix="×">0</span></div>
-      <div class="metric-label">Ratio vs reposts</div>
+
+    <div class="proof-insight reveal">
+      <svg class="proof-insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.58-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+      </svg>
+      <p>
+        500€ de budget pub pour 76k abonnés et 50M de vues.
+        Le bon contenu réduit le coût d'acquisition, les ads amplifient ce qui performe déjà.
+      </p>
     </div>
-  </div>
-  <div class="proof-insight reveal">
-    <p><strong>40 créations originales</strong> ont généré <strong>20× plus de vues</strong> que 103 reposts Instagram. Le contenu natif, pensé pour la plateforme, surpasse systématiquement le recyclage.</p>
+
   </div>
 </section>
 
 <div class="divider"></div>
-
-<!-- WORKS -->
 <section class="works" id="works">
   <div class="works-header">
     <div class="section-label centered reveal">Travaux</div>
     <h2 class="reveal reveal-d1">Le feed, c'est la scène.</h2>
     <p class="reveal reveal-d2">Chaque contenu est un format court pensé pour performer.</p>
   </div>
-
-  <!-- TABS -->
   <div class="tabs reveal">
     <button class="tab-btn active" data-panel="selection">Sélection<span class="tab-count">6</span></button>
-    <button class="tab-btn" data-panel="edits">Edits<span class="tab-count">18</span></button>
+    <button class="tab-btn" data-panel="edits">Edits<span class="tab-count">9</span></button>
     <button class="tab-btn" data-panel="animation">Animation & IA<span class="tab-count">9</span></button>
   </div>
 
   <!-- PANEL: SELECTION -->
   <div class="cat-panel active is-entering" id="panel-selection" data-limit="6">
     <div class="grid">
-
-      <!-- 1) Brad Pitt & Tom Cruise — Batman × Alexandre Dumas (7.2M) -->
-      <div class="card">
-        <video class="card-video" autoplay muted loop playsinline preload="metadata">
-          <source src="videos/bradtom.mp4" type="video/mp4">
-        </video>
-        <div class="card-gradient"></div>
-        <a href="https://www.instagram.com/reel/DCj5rqcC4AK/" target="_blank" class="card-ext">↗</a>
-        <div class="card-content">
-          <div class="card-cat">Edit · Sevenandseries</div>
-          <div class="card-title">Brad Pitt & Tom Cruise</div>
-          <div class="card-stats"><span class="card-stat"><b>7.2M</b> vues</span></div>
-        </div>
-      </div>
-
-      <!-- 2) Pierre Niney -->
-      <div class="card">
-        <video class="card-video" autoplay muted loop playsinline preload="metadata">
-          <source src="videos/pierreniney.mp4" type="video/mp4">
-        </video>
-        <div class="card-gradient"></div>
-        <a href="#" target="_blank" class="card-ext">↗</a>
-        <div class="card-content">
-          <div class="card-cat">Edit · Sevenandseries</div>
-          <div class="card-title">Pierre Niney — Le Compte De Monte-Cristo)</div>
-          <div class="card-stats"><span class="card-stat"><b>453k</b> vues</span></div>
-        </div>
-      </div>
-
-      <!-- 3) Burna Boy -->
-      <div class="card">
-        <video class="card-video" autoplay muted loop playsinline preload="metadata">
-          <source src="videos/burnaboy.mp4" type="video/mp4">
-        </video>
-        <div class="card-gradient"></div>
-        <a href="#" target="_blank" class="card-ext">↗</a>
-        <div class="card-content">
-          <div class="card-cat">Activation · Bangrzfr</div>
-          <div class="card-title">Burna Boy </div>
-          <div class="card-stats"><span class="card-stat"><b>25,7k</b> vues</span></div>
-        </div>
-      </div>
-
-      <!-- 4) Swift Guad -->
-      <div class="card">
-        <video class="card-video" autoplay muted loop playsinline preload="metadata">
-          <source src="videos/swiftguad.mp4" type="video/mp4">
-        </video>
-        <div class="card-gradient"></div>
-        <a href="https://www.youtube.com/watch?v=khQJB-26yi8" target="_blank" class="card-ext">↗</a>
-        <div class="card-content">
-          <div class="card-cat">Clip</div>
-          <div class="card-title">Swift Guad — Petit Monstre</div>
-          <div class="card-stats"><span class="card-stat"><b>1.1M</b> vues</span></div>
-        </div>
-      </div>
-
-      <!-- 5) Aya Nakamura  -->
-      <div class="card">
-        <video class="card-video" autoplay muted loop playsinline preload="metadata">
-          <source src="videos/ayanakamura.mp4" type="video/mp4">
-        </video>
-        <div class="card-gradient"></div>
-        <a href="https://www.tiktok.com/@bangrzfr/video/7349234439219694880?lang=fr" target="_blank" class="card-ext">↗</a>
-        <div class="card-content">
-          <div class="card-cat">Activation · Bangrzfr</div>
-          <div class="card-title">Aya Nakamura — Hype ft. Ayra Starr</div>
-          <div class="card-stats"><span class="card-stat"><b>153.2k</b> vues</span></div>
-        </div>
-      </div>
-
-      <!-- 6) Ardentes — Jour 1 -->
-      <div class="card">
-        <video class="card-video" autoplay muted loop playsinline preload="metadata">
-          <source src="videos/REPLACE_ardentes-j1.mp4" type="video/mp4">
-        </video>
-        <div class="card-gradient"></div>
-        <a href="https://www.instagram.com/reel/C9XBdTVI8qF/" target="_blank" class="card-ext">↗</a>
-        <div class="card-content">
-          <div class="card-cat">Événement · Bangrzfr</div>
-          <div class="card-title">Les Ardentes — Recap Jour 1</div>
-          <div class="card-stats"><span class="card-stat"><b>34.7k</b> vues</span></div>
-        </div>
-      </div>
-
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/bradtom.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/p/DLdGhehiI0s/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Brad Pitt & Tom Cruise</div><div class="card-stats"><span class="card-stat"><b>8.9M</b> vues</span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/pierreniney.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DCj5rqcC4AK/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Pierre Niney, Le Comte De Monte-Cristo</div><div class="card-stats"><span class="card-stat"><b>453k</b> vues</span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/burnaboy.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.tiktok.com/@bangrzfr/video/7372594849746390304?lang=fr" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Activation · Bangrzfr</div><div class="card-title">Burna Boy</div><div class="card-stats"><span class="card-stat"><b>25.7k</b> vues</span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/swiftguad.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.youtube.com/watch?v=khQJB-26yi8" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Clip · Réalisateur</div><div class="card-title">Swift Guad, Petit Monstre</div><div class="card-stats"><span class="card-stat"><b>1.1M</b> vues</span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/ayanakamura.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.tiktok.com/@bangrzfr/video/7349234439219694880?lang=fr" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Activation · Bangrzfr</div><div class="card-title">Aya Nakamura, Hype ft. Ayra Starr</div><div class="card-stats"><span class="card-stat"><b>153.2k</b> vues</span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/Jour1Ardentes.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/reel/C9XBdTVI8qF/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Événement · Bangrzfr</div><div class="card-title">Les Ardentes, Recap Jour 1</div><div class="card-stats"><span class="card-stat"><b>34.7k</b> vues</span></div></div></div>
     </div>
-
-    <!-- On garde le bouton (il se cache tout seul si <= limit) -->
     <div class="show-more-wrap"><button class="show-more-btn"><span class="btn-label">Voir plus</span><span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button></div>
   </div>
 
-  <!-- PANEL: EDITS (reprend ton ancien "editorial") -->
+  <!-- PANEL: EDITS -->
   <div class="cat-panel" id="panel-edits" data-limit="6">
     <div class="grid">
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0c1929,#162033)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DIT4eY6NER_/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Tron (1982–2025)</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a2e,#0f172a)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DLdGhehiI0s/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Joseph Kosinski — Interview GQ</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1e1b4b,#172554)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/C-tzXFEopI8/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">9 Films incontournables des années 80</div><div class="card-stats"><span class="card-stat"><b>181k</b> vues</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#292524)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DEGY62EIL8Q/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Timothée Chalamet — Biopic Bob Dylan</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#0a0f1a,#111827)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/C-2HixsOZKR/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">9 Iconic Scores — John Williams</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1a1a2e,#1e293b)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DCw9pDyCluZ/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Lyrics · Sevenandseries</div><div class="card-title">Stromae & Pomme — Ma Meilleure Ennemie (Arcane S2)</div><div class="card-stats"><span class="card-stat"><b>882k</b> vues</span></div></div></div>
-      <!-- le reste reste identique si tu veux, tu peux recoller tes cards ici -->
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/Tron.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DIT4eY6NER_/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Tron (1982–2025)</div><div class="card-stats"><span class="card-stat"><b>3.3M</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/BradPittInterview.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DLU6lTVibwT/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Brad Pitt, Interview</div><div class="card-stats"><span class="card-stat"><b>492k</b> vues</span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/neuf_films.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/p/C-tzXFEopI8/?img_index=1" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">9 Films incontournables des années 80</div><div class="card-stats"><span class="card-stat"><b>181k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/AlbumEminem_50Cent.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.tiktok.com/@bangrzfr/video/7348518653777743136?lang=fr" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Bangrzfr</div><div class="card-title">Album Eminem</div><div class="card-stats"><span class="card-stat"><b>1.9M</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/50Cent.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.tiktok.com/@bangrzfr/video/7354486864608382241?lang=fr" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Bangrzfr</div><div class="card-title">50 Cent, Prank</div><div class="card-stats"><span class="card-stat"><b>3.3M</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/Stromae.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DCw9pDyCluZ/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Lyrics · Sevenandseries</div><div class="card-title">Stromae & Pomme, Ma Meilleure Ennemie</div><div class="card-stats"><span class="card-stat"><b>882k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/DenzelInterview.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DCw9pDyCluZ/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Interview · Sevenandseries</div><div class="card-title">Denzel Washington, Gladiator II</div><div class="card-stats"><span class="card-stat"><b>11k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/InterviewFave.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DCw9pDyCluZ/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Interview · Bangrzfr</div><div class="card-title">Fave, Les Ardentes</div><div class="card-stats"><span class="card-stat"><b>26.2k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/ViggoMortensenInterviews.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DJKMJnJC76q/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Interview · Sevenandseries</div><div class="card-title">Viggo Mortensen</div><div class="card-stats"><span class="card-stat"><b>9k</b></span></div></div></div>
     </div>
     <div class="show-more-wrap"><button class="show-more-btn"><span class="btn-label">Voir plus</span><span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button></div>
   </div>
 
-  <!-- PANEL: ANIMATION & IA (inchangé) -->
+  <!-- PANEL: ANIMATION & IA -->
   <div class="cat-panel" id="panel-animation" data-limit="6">
     <div class="grid">
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#44403c)"></div><div class="card-gradient"></div><a href="https://www.youtube.com/watch?v=8TUU8mll-68" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation · Clip</div><div class="card-title">Renaud — Adios Zapata (Zarma Remix Visualizer)</div><div class="card-stats"><span class="card-stat"><b>27k</b> vues</span></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1e1b4b,#312e81)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DR4vVQ9AjRa/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">Etienne Daho</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#14532d,#064e3b)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DO0sdpODsce/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">Kids United</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1e293b,#334155)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DRT3LrAjUzT/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation & IA</div><div class="card-title">Silver Surfer — Studio Monotype</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#18181b,#27272a)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DSSYa7ziCyj/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation & IA</div><div class="card-title">Studio Monotype — Design & Animation</div><div class="card-stats"></div></div></div>
-      <div class="card"><div class="card-bg" style="background:linear-gradient(135deg,#1c1917,#292524)"></div><div class="card-gradient"></div><a href="https://www.instagram.com/p/DRCUh-SCGwW/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">St Germain — Pochette animée</div><div class="card-stats"></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/etienne.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/p/DO0sdpODsce/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation · Clip</div><div class="card-title">Etienne Daho, Animation Pochette</div><div class="card-stats"><span class="card-stat"><b>150k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/bozambo.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/p/DRCUh-SCGwW/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">St Germain, Animation Pochette</div><div class="card-stats"><span class="card-stat"><b>10.6k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/KIDS.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/p/DRT3LrAjUzT/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">Kids United, Animation Pochette</div><div class="card-stats"><span class="card-stat"><b>42.2k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/renaud_dessin.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/p/DR4vVQ9AjRa/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation & IA</div><div class="card-title">Renaud, Animation Pochette</div><div class="card-stats"><span class="card-stat"><b>236k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/marron.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="#" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation & IA</div><div class="card-title">Studio Monotype, Design & Animation</div><div class="card-stats"><span class="card-stat"><b>3.8k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/stgermain_balle.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/p/DSZzjv6jAUk/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation pochette</div><div class="card-title">St Germain, Pochette animée</div><div class="card-stats"><span class="card-stat"><b>15.2k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/RenaudAdios.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.youtube.com/watch?v=8TUU8mll-68" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation & IA</div><div class="card-title">Renaud, Animation Pochette</div><div class="card-stats"><span class="card-stat"><b>28k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/vert.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="#" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation</div><div class="card-title">Studio Monotype, Design & Animation</div><div class="card-stats"><span class="card-stat"><b>2k</b></span></div></div></div>
+      <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/silver_surfeur.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/p/DNCy2l6iNIM/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation</div><div class="card-title">Silver Surfer, Design & Animation</div><div class="card-stats"><span class="card-stat"><b>—</b></span></div></div></div>
     </div>
     <div class="show-more-wrap"><button class="show-more-btn"><span class="btn-label">Voir plus</span><span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button></div>
   </div>
-
 </section>
 
 <div class="divider"></div>
 
-<!-- METHOD -->
+<!-- METHOD — Variant C: Timeline système -->
 <section class="method" id="method">
   <div class="method-header">
     <div class="section-label centered reveal">Approche</div>
-    <h2 class="reveal reveal-d1">La viralité est un système.</h2>
-    <p class="reveal reveal-d2">Pas un coup de chance. Un processus en trois temps.</p>
+    <h2 class="reveal reveal-d1">Un système, pas un coup de chance.</h2>
+    <p class="reveal reveal-d2">Chaque contenu viral est le résultat d'un processus rigoureux.</p>
   </div>
-  <div class="steps stagger-group reveal">
-    <div class="step-card stagger-child"><div class="step-num">01</div><h3 class="step-title">Diagnostic</h3><p class="step-desc">J'analyse votre audience, vos formats et vos données de performance. Pas d'intuition — des chiffres. Je cartographie ce qui fonctionne et ce qui freine.</p></div>
-    <div class="step-card stagger-child"><div class="step-num">02</div><h3 class="step-title">Création</h3><p class="step-desc">Écriture, direction artistique, montage. Chaque contenu est conçu pour capter dans les 3 premières secondes et retenir jusqu'à la dernière.</p></div>
-    <div class="step-card stagger-child"><div class="step-num">03</div><h3 class="step-title">Itération</h3><p class="step-desc">Je mesure, j'ajuste, je relance. Les performances alimentent les prochaines créations. Un cycle continu d'optimisation.</p></div>
+
+  <div class="mc-timeline reveal reveal-d2">
+    <div class="mc-node">
+      <div class="mc-node-phase">Phase 01 · Avant de créer</div>
+      <h3 class="mc-node-title">Comprendre ce qui fonctionne pour vous</h3>
+      <p class="mc-node-desc">
+        Audit de vos contenus, de votre audience et de vos concurrents.
+        Je cartographie les formats qui performent, les hooks qui retiennent,
+        et les angles morts que personne n'exploite.
+      </p>
+      <div class="mc-node-tags">
+        <span class="mc-tag">Audit contenus</span>
+        <span class="mc-tag">Analyse concurrence</span>
+        <span class="mc-tag">Data rétention</span>
+      </div>
+    </div>
+
+    <div class="mc-node">
+      <div class="mc-node-phase">Phase 02 · Création</div>
+      <h3 class="mc-node-title">Arrêter le scroll en 3 secondes</h3>
+      <p class="mc-node-desc">
+        Hook, écriture, direction artistique, montage. Chaque contenu
+        est calibré pour capter immédiatement et retenir jusqu'à la fin.
+        Le format est natif, pas recyclé.
+      </p>
+      <div class="mc-node-tags">
+        <span class="mc-tag">Hooks</span>
+        <span class="mc-tag">Montage</span>
+        <span class="mc-tag">Direction artistique</span>
+        <span class="mc-tag">Contenus natifs</span>
+      </div>
+    </div>
+
+    <div class="mc-node">
+      <div class="mc-node-phase">Phase 03 · Post-publication</div>
+      <h3 class="mc-node-title">Chaque post nourrit le suivant</h3>
+      <p class="mc-node-desc">
+        Analyse des rétentions seconde par seconde, des partages, des saves.
+        Les données du post N alimentent la stratégie du post N+1.
+        C'est un cycle, pas une to-do list.
+      </p>
+      <div class="mc-node-tags">
+        <span class="mc-tag">Rétention / sec</span>
+        <span class="mc-tag">Partages</span>
+        <span class="mc-tag">Itération</span>
+      </div>
+    </div>
+
+    <div class="mc-result">
+      <p>
+        <strong>Résultat :</strong> un système où chaque contenu est meilleur que le précédent.
+        Pas de viralité accidentelle. Une progression mesurable.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -400,18 +1243,18 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
 <section class="contact" id="contact">
   <div class="section-label centered reveal">Contact</div>
   <h2 class="reveal reveal-d1">Un projet ?<br>Parlons-en.</h2>
-  <p class="reveal reveal-d2">Discutons de ce que les formats courts peuvent faire pour votre marque.</p>
-  <a href="mailto:tao.legia.pro@gmail.com" class="cta-primary reveal reveal-d3">Me contacter</a>
+  <p class="reveal reveal-d2">Disponible en CDI ou en freelance. Discutons de ce que les formats courts peuvent faire pour votre marque.</p>
+  <a href="/cdn-cgi/l/email-protection#2f5b4e4001434a48464e015f5d406f48424e4643014c4042" class="cta-primary reveal reveal-d3">Me contacter</a>
   <div class="contact-meta reveal reveal-d4">
     <a href="https://www.instagram.com/sevenandseries/" target="_blank" class="contact-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>@sevenandseries</a>
-    <a href="mailto:tao.legia.pro@gmail.com" class="contact-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 4l10 8 10-8"/></svg>tao.legia.pro@gmail.com</a>
+    <a href="/cdn-cgi/l/email-protection#afdbcec081c3cac8c6ce81dfddc0efc8c2cec6c381ccc0c2" class="contact-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 4l10 8 10-8"/></svg><span class="__cf_email__" data-cfemail="86f2e7e9a8eae3e1efe7a8f6f4e9c6e1ebe7efeaa8e5e9eb">[email&#160;protected]</span></a>
     <span class="contact-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Paris, France</span>
   </div>
 </section>
 
 <footer>© 2025 Tao Le Gia</footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── Reveal ──
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -419,11 +1262,22 @@ const io = new IntersectionObserver((entries) => {
       e.target.classList.add('visible');
       e.target.querySelectorAll('.count-up').forEach(startCount);
       if (e.target.classList.contains('count-up')) startCount(e.target);
+      if (e.target.id === 'proofCompare' || e.target.querySelector('.compare-bar-fill')) {
+        e.target.querySelectorAll('.compare-bar-fill').forEach((bar, i) => {
+          setTimeout(() => {
+            bar.style.transform = `scaleX(${bar.dataset.width / 100})`;
+            bar.classList.add('animated');
+          }, 300 + i * 250);
+        });
+      }
       io.unobserve(e.target);
     }
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal, .stagger-group').forEach(el => io.observe(el));
+
+const compareEl = document.getElementById('proofCompare');
+if (compareEl) io.observe(compareEl);
 
 // ── Counters ──
 function startCount(el) {
@@ -444,14 +1298,11 @@ addEventListener('scroll', () => { document.getElementById('nav').classList.togg
 // ── TABS ──
 const tabs = document.querySelectorAll('.tab-btn');
 const panels = document.querySelectorAll('.cat-panel');
-
 tabs.forEach(tab => {
   tab.addEventListener('click', () => {
     const targetId = 'panel-' + tab.dataset.panel;
-
     tabs.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-
     panels.forEach(p => {
       if (p.id === targetId) {
         p.classList.add('active');
@@ -462,102 +1313,52 @@ tabs.forEach(tab => {
         p.classList.remove('active', 'is-entering');
       }
     });
-
-    const activePanel = document.getElementById(targetId);
-    resetShowMore(activePanel);
+    resetShowMore(document.getElementById(targetId));
   });
 });
 
-// ── SHOW MORE / LESS per panel ──
+// ── SHOW MORE ──
 function initShowMore(panel) {
-  const grid = panel.querySelector('.grid');
-  const cards = Array.from(grid.querySelectorAll('.card'));
+  const cards = Array.from(panel.querySelector('.grid').querySelectorAll('.card'));
   const limit = parseInt(panel.dataset.limit) || 6;
   const btn = panel.querySelector('.show-more-btn');
   const wrap = panel.querySelector('.show-more-wrap');
   const label = btn.querySelector('.btn-label');
-
   if (cards.length <= limit) wrap.classList.add('no-overflow');
   else wrap.classList.remove('no-overflow');
-
-  cards.forEach((card, i) => {
-    if (i >= limit) card.classList.add('is-hidden');
-    else card.classList.remove('is-hidden', 'is-revealing');
-  });
-
+  cards.forEach((c, i) => { if (i >= limit) c.classList.add('is-hidden'); else c.classList.remove('is-hidden', 'is-revealing'); });
   label.textContent = 'Voir plus';
   btn.classList.remove('is-expanded');
   btn._expanded = false;
-
   btn.onclick = () => {
     if (!btn._expanded) {
-      const hidden = cards.filter(c => c.classList.contains('is-hidden'));
-      hidden.forEach((card, i) => {
+      cards.filter(c => c.classList.contains('is-hidden')).forEach((card, i) => {
         card.classList.remove('is-hidden');
         card.classList.add('is-revealing');
         card.style.animationDelay = `${i * 0.06}s`;
-        card.addEventListener('animationend', () => {
-          card.classList.remove('is-revealing');
-          card.style.animationDelay = '';
-        }, { once: true });
+        card.addEventListener('animationend', () => { card.classList.remove('is-revealing'); card.style.animationDelay = ''; }, { once: true });
       });
-      label.textContent = 'Voir moins';
-      btn.classList.add('is-expanded');
-      btn._expanded = true;
+      label.textContent = 'Voir moins'; btn.classList.add('is-expanded'); btn._expanded = true;
     } else {
-      cards.forEach((card, i) => {
-        if (i >= limit) {
-          card.style.transition = 'opacity .4s var(--ease-smooth), transform .4s var(--ease-smooth)';
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(12px) scale(.97)';
-          setTimeout(() => {
-            card.classList.add('is-hidden');
-            card.style.opacity = '';
-            card.style.transform = '';
-            card.style.transition = '';
-          }, 420);
-        }
-      });
-      label.textContent = 'Voir plus';
-      btn.classList.remove('is-expanded');
-      btn._expanded = false;
-      setTimeout(() => {
-        document.getElementById('works').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 450);
+      cards.forEach((c, i) => { if (i >= limit) { c.style.transition = 'opacity .4s var(--ease-smooth), transform .4s var(--ease-smooth)'; c.style.opacity = '0'; c.style.transform = 'translateY(12px) scale(.97)'; setTimeout(() => { c.classList.add('is-hidden'); c.style.opacity = ''; c.style.transform = ''; c.style.transition = ''; }, 420); } });
+      label.textContent = 'Voir plus'; btn.classList.remove('is-expanded'); btn._expanded = false;
+      setTimeout(() => { document.getElementById('works').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 450);
     }
   };
 }
-
 function resetShowMore(panel) {
-  const grid = panel.querySelector('.grid');
-  const cards = Array.from(grid.querySelectorAll('.card'));
+  const cards = Array.from(panel.querySelector('.grid').querySelectorAll('.card'));
   const limit = parseInt(panel.dataset.limit) || 6;
   const btn = panel.querySelector('.show-more-btn');
   const label = btn.querySelector('.btn-label');
-
-  cards.forEach((card, i) => {
-    card.style.opacity = '';
-    card.style.transform = '';
-    card.style.transition = '';
-    card.classList.remove('is-revealing');
-    if (i >= limit) card.classList.add('is-hidden');
-    else card.classList.remove('is-hidden');
-  });
-  label.textContent = 'Voir plus';
-  btn.classList.remove('is-expanded');
-  btn._expanded = false;
+  cards.forEach((c, i) => { c.style.opacity = ''; c.style.transform = ''; c.style.transition = ''; c.classList.remove('is-revealing'); if (i >= limit) c.classList.add('is-hidden'); else c.classList.remove('is-hidden'); });
+  label.textContent = 'Voir plus'; btn.classList.remove('is-expanded'); btn._expanded = false;
 }
-
 panels.forEach(initShowMore);
 
-// ── Smooth anchor scroll ──
 document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+  a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
 });
 </script>
-
 </body>
 </html>
