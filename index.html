@@ -48,220 +48,42 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .stagger-child{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease-smooth),transform .8s var(--ease-smooth)}
 .stagger-child:nth-child(1){transition-delay:.05s}.stagger-child:nth-child(2){transition-delay:.12s}.stagger-child:nth-child(3){transition-delay:.19s}.stagger-child:nth-child(4){transition-delay:.26s}.stagger-child:nth-child(5){transition-delay:.33s}.stagger-child:nth-child(6){transition-delay:.4s}
 
-/* ═══════════════════════════════════════════════
-   HERO — Variant B: Stat-first + Video Wall BG
-   ═══════════════════════════════════════════════ */
-.hero{
-  min-height:100vh;
-  display:flex;flex-direction:column;
-  justify-content:center;align-items:center;
-  text-align:center;
-  padding:120px var(--side-pad) 80px;
-  position:relative;
-  overflow:hidden;
-}
-
-/* ── VIDEO WALL BACKGROUND ── */
-.hero-video-wall{
-  position:absolute;
-  inset:0;
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  padding:0 10px;
-  z-index:0;
-  opacity:0;
-  animation:wallFadeIn 2s 0.5s var(--ease-smooth) forwards;
-}
-
-@keyframes wallFadeIn{
-  to{opacity:1}
-}
-
-.hero-video-col{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  width:calc((100% - 40px) / 5);
-  min-width:160px;
-  max-width:240px;
-  flex-shrink:0;
-}
-
-/* Each column scrolls upward infinitely */
-.hero-video-col .col-inner{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  animation:scrollUp var(--scroll-speed, 30s) linear infinite;
-}
-
-@keyframes scrollUp{
-  0%{transform:translateY(0)}
-  100%{transform:translateY(-50%)}
-}
-
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px var(--side-pad) 80px;position:relative;overflow:hidden}
+.hero-video-wall{position:absolute;inset:0;display:flex;gap:10px;justify-content:center;padding:0 10px;z-index:0;opacity:0;animation:wallFadeIn 2s 0.5s var(--ease-smooth) forwards}
+@keyframes wallFadeIn{to{opacity:1}}
+.hero-video-col{display:flex;flex-direction:column;gap:10px;width:calc((100% - 40px) / 5);min-width:160px;max-width:240px;flex-shrink:0}
+.hero-video-col .col-inner{display:flex;flex-direction:column;gap:10px;animation:scrollUp var(--scroll-speed, 30s) linear infinite}
+@keyframes scrollUp{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}
 .hero-video-col:nth-child(1) .col-inner{animation-duration:35s}
 .hero-video-col:nth-child(2) .col-inner{animation-duration:28s;animation-delay:-8s}
 .hero-video-col:nth-child(3) .col-inner{animation-duration:32s;animation-delay:-4s}
 .hero-video-col:nth-child(4) .col-inner{animation-duration:26s;animation-delay:-12s}
 .hero-video-col:nth-child(5) .col-inner{animation-duration:38s;animation-delay:-6s}
-
-.hero-video-col video{
-  width:100%;
-  aspect-ratio:9/16;
-  object-fit:cover;
-  border-radius:12px;
-  display:block;
-  background:var(--surface-1);
-}
-
-/* Dark overlay + blur over the video wall */
-.hero-video-overlay{
-  position:absolute;
-  inset:0;
-  z-index:1;
-  background:
-    radial-gradient(ellipse at center, rgba(5,5,5,.65), rgba(5,5,5,.85) 70%),
-    linear-gradient(180deg, rgba(5,5,5,.4) 0%, rgba(5,5,5,.2) 40%, rgba(5,5,5,.4) 60%, rgba(5,5,5,.95) 100%);
-  backdrop-filter:blur(2px);
-  -webkit-backdrop-filter:blur(2px);
-}
-
-/* All hero content sits above the wall */
-.hero-label,
-.hero-stat-line,
-.hero-stat-label,
-.hero-divider,
-.hero-tagline,
-.hero-byline,
-.hero-cta,
-.hero-availability,
-.scroll-hint{
-  position:relative;
-  z-index:2;
-}
-
-.hero-label{
-  font-family:var(--font-display);
-  font-size:14px;
-  font-weight:500;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--grey-light);
-  margin-bottom:28px;
-}
-
-/* The stat IS the headline */
-.hero-stat-line{
-  display:flex;
-  align-items:baseline;
-  gap:14px;
-  margin-bottom:16px;
-}
-
-.hero-number{
-  font-family:var(--font-display);
-  font-size:clamp(64px,9vw,120px);
-  font-weight:900;
-  color:var(--white-pure);
-  line-height:.85;
-  letter-spacing:-.05em;
-}
-
-.hero-suffix{
-  font-family:var(--font-display);
-  font-size:clamp(20px,2.5vw,36px);
-  font-weight:300;
-  color:var(--grey-bright);
-  letter-spacing:-.01em;
-  align-self:flex-end;
-  padding-bottom:.1em;
-}
-
-.hero-stat-label{
-  font-family:var(--font-display);
-  font-size:13px;
-  font-weight:400;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--grey-mid);
-  margin-bottom:56px;
-}
-
-/* No more divider line — Apple never uses them in heroes */
-.hero-divider{
-  display:none;
-}
-
-.hero-tagline{
-  font-family:var(--font-display);
-  font-size:clamp(18px,2.2vw,28px);
-  font-weight:500;
-  line-height:1.45;
-  letter-spacing:-.01em;
-  color:var(--white-primary);
-  max-width:520px;
-  margin-bottom:12px;
-}
-
-.hero-tagline .em{
-  color:var(--grey-light);
-  font-weight:400;
-}
-
-.hero-byline{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-bottom:48px;
-}
-
-.hero-byline-name{
-  font-family:var(--font-display);
-  font-size:12px;
-  font-weight:600;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--grey-bright);
-}
-
-.hero-byline-dot{
-  width:3px;height:3px;border-radius:50%;
-  background:var(--grey-dark);
-}
-
-.hero-byline-location{
-  font-family:var(--font-display);
-  font-size:12px;
-  font-weight:400;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--grey-mid);
-}
-
-.hero-cta{
-  display:inline-flex;align-items:center;gap:10px;
-  font-family:var(--font-display);font-size:12px;font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;
-  color:var(--white-primary);padding:18px 44px;
-  border:1px solid rgba(255,255,255,.12);border-radius:100px;
-  transition:all .5s var(--ease-out);cursor:pointer;background:transparent;
-}
+.hero-video-col video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:12px;display:block;background:var(--surface-1)}
+.hero-video-overlay{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center, rgba(5,5,5,.65), rgba(5,5,5,.85) 70%),linear-gradient(180deg, rgba(5,5,5,.4) 0%, rgba(5,5,5,.2) 40%, rgba(5,5,5,.4) 60%, rgba(5,5,5,.95) 100%);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.hero-label,.hero-stat-line,.hero-stat-label,.hero-divider,.hero-tagline,.hero-byline,.hero-cta,.hero-availability,.scroll-hint{position:relative;z-index:2}
+.hero-label{font-family:var(--font-display);font-size:14px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--grey-light);margin-bottom:28px}
+.hero-stat-line{display:flex;align-items:baseline;gap:14px;margin-bottom:16px}
+.hero-number{font-family:var(--font-display);font-size:clamp(64px,9vw,120px);font-weight:900;color:var(--white-pure);line-height:.85;letter-spacing:-.05em}
+.hero-suffix{font-family:var(--font-display);font-size:clamp(20px,2.5vw,36px);font-weight:300;color:var(--grey-bright);letter-spacing:-.01em;align-self:flex-end;padding-bottom:.1em}
+.hero-stat-label{font-family:var(--font-display);font-size:13px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:56px}
+.hero-divider{display:none}
+.hero-tagline{font-family:var(--font-display);font-size:clamp(18px,2.2vw,28px);font-weight:500;line-height:1.45;letter-spacing:-.01em;color:var(--white-primary);max-width:520px;margin-bottom:12px}
+.hero-tagline .em{color:var(--grey-light);font-weight:400}
+.hero-byline{display:flex;align-items:center;gap:14px;margin-bottom:48px}
+.hero-byline-name{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--grey-bright)}
+.hero-byline-dot{width:3px;height:3px;border-radius:50%;background:var(--grey-dark)}
+.hero-byline-location{font-family:var(--font-display);font-size:12px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--grey-mid)}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--white-primary);padding:18px 44px;border:1px solid rgba(255,255,255,.12);border-radius:100px;transition:all .5s var(--ease-out);cursor:pointer;background:transparent}
 .hero-cta:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.25);transform:translateY(-2px);box-shadow:0 8px 40px rgba(255,255,255,.03)}
 .hero-cta .arrow{display:inline-block;transition:transform .4s var(--ease-out)}
 .hero-cta:hover .arrow{transform:translateY(3px)}
-
 .scroll-hint{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px}
 .scroll-line{width:1px;height:48px;position:relative;overflow:hidden}
 .scroll-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:linear-gradient(to bottom,transparent,var(--grey-mid),transparent);animation:scroll-drop 2.2s var(--ease-apple) infinite}
 @keyframes scroll-drop{0%{top:-100%}100%{top:200%}}
-
-/* Hide wall on very small screens for performance */
-@media(max-width:540px){
-  .hero-video-wall{display:none}
-  .hero-video-overlay{background:none;backdrop-filter:none}
-}
+@media(max-width:540px){.hero-video-wall{display:none}.hero-video-overlay{background:none;backdrop-filter:none}}
 
 .divider{width:100%;max-width:1200px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.04) 50%,transparent 100%)}
 .section-label{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:48px;display:flex;align-items:center;gap:16px}
@@ -269,330 +91,52 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .section-label.centered{justify-content:center}
 .section-label.centered::after{content:'';width:28px;height:1px;background:var(--grey-dark)}
 
-/* ═══════════════════════════════════════════════════════
-   PROOF V5 — Redesigned Case Study
-   
-   Changes from V4:
-   1. Split layout: narrative left + hero metric right
-   2. Animated progress bar for ×20 ratio (visual proof)
-   3. Before/After comparison row (reposts vs originals)
-   4. Tighter vertical rhythm, better scan-ability
-   5. Metric cards with animated count-up on scroll
-   6. Subtle glow pulse on the hero number
-   ═══════════════════════════════════════════════════════ */
-.proof{
-  padding:var(--section-pad) var(--side-pad);
-  max-width:1200px;
-  margin:0 auto;
-}
+/* PROOF */
+.proof{padding:var(--section-pad) var(--side-pad);max-width:1200px;margin:0 auto}
+.proof-shell{position:relative;border-radius:28px;background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 24px 80px rgba(0,0,0,.4);overflow:hidden}
+.proof-shell::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 15% 0%, rgba(255,255,255,.06), transparent 40%),radial-gradient(ellipse at 85% 100%, rgba(255,255,255,.03), transparent 35%);pointer-events:none;z-index:0}
+.proof-top{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;padding:36px 36px 0}
+.proof-narrative{max-width:580px}
+.proof-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;margin-bottom:24px;border-radius:999px;font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--grey-bright);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
+.proof-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--white-primary);animation:dot-pulse 2.4s ease infinite}
+@keyframes dot-pulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+.proof-title{font-family:var(--font-display);font-size:clamp(26px,3.5vw,46px);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:18px}
+.proof-title .thin{font-weight:300;color:var(--grey-bright)}
+.proof-context{font-size:15px;font-weight:400;color:var(--grey-light);line-height:1.75;max-width:520px}
+.proof-hero-metric{text-align:right;padding-bottom:12px;position:relative}
+.proof-hero-number{font-family:var(--font-display);font-size:clamp(56px,7vw,88px);font-weight:900;color:var(--white-pure);line-height:.85;letter-spacing:-.05em;position:relative}
+.proof-hero-number::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:200px;height:120px;background:radial-gradient(ellipse,rgba(255,255,255,.06),transparent 70%);pointer-events:none;z-index:-1}
+.proof-hero-unit{font-family:var(--font-display);font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-mid);margin-top:10px}
+.proof-metrics{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:32px 0 0;background:rgba(255,255,255,.03)}
+.metric{padding:28px 24px;background:rgba(255,255,255,.02);transition:background .5s var(--ease-apple);text-align:center}
+.metric:hover{background:rgba(255,255,255,.04)}
+.metric-kicker{font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:12px}
+.metric-number{font-family:var(--font-display);font-size:clamp(26px,2.8vw,38px);font-weight:800;color:var(--white-pure);line-height:1;letter-spacing:-.03em;margin-bottom:6px}
+.metric-label{font-family:var(--font-display);font-size:10px;color:var(--grey-bright);letter-spacing:.06em;text-transform:uppercase;font-weight:500}
+.proof-compare{position:relative;z-index:1;padding:28px 36px 32px}
+.compare-label{font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:20px}
+.compare-row{display:flex;flex-direction:column;gap:14px}
+.compare-bar{display:grid;grid-template-columns:140px 1fr auto;align-items:center;gap:16px}
+.compare-bar-label{font-family:var(--font-display);font-size:12px;font-weight:500;color:var(--grey-bright);letter-spacing:.02em}
+.compare-bar-track{height:6px;border-radius:100px;background:rgba(255,255,255,.04);overflow:hidden;position:relative}
+.compare-bar-fill{height:100%;border-radius:100px;background:var(--white-primary);transform-origin:left;transform:scaleX(0);transition:transform 1.8s var(--ease-out)}
+.compare-bar-fill.animated{transform:scaleX(1)}
+.compare-bar--dim .compare-bar-fill{background:rgba(255,255,255,.15)}
+.compare-bar-value{font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--white-dim);min-width:50px;text-align:right;letter-spacing:-.01em}
+.compare-bar--bright .compare-bar-value{color:var(--white-pure)}
+.proof-insight{position:relative;z-index:1;margin:24px 36px 36px;padding:20px 24px;border-radius:14px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:14px}
+.proof-insight-icon{flex-shrink:0;width:18px;height:18px;color:var(--grey-mid)}
+.proof-insight p{font-size:13px;line-height:1.65;color:var(--grey-light)}
+.proof-insight strong{color:var(--white-primary);font-weight:600}
+@media(max-width:768px){.proof-shell{border-radius:22px}.proof-top{grid-template-columns:1fr;gap:24px;padding:28px 24px 0}.proof-hero-metric{text-align:left;padding-bottom:0}.proof-hero-number{font-size:clamp(48px,12vw,68px)}.proof-metrics{grid-template-columns:1fr}.proof-compare{padding:24px 24px 28px}.compare-bar{grid-template-columns:100px 1fr auto;gap:12px}.proof-insight{margin:0 24px 28px;gap:10px}}
 
-.proof-shell{
-  position:relative;
-  border-radius:28px;
-  background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
-  border:1px solid rgba(255,255,255,.06);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 24px 80px rgba(0,0,0,.4);
-  overflow:hidden;
-}
+.proof-2{padding:0 var(--side-pad) var(--section-pad);max-width:1200px;margin:0 auto}
+.proof-2 .proof-shell{margin-top:0}
+.proof-2-metrics{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:36px 0 0;background:rgba(255,255,255,.03)}
 
-/* Ambient light reflections */
-.proof-shell::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(ellipse at 15% 0%, rgba(255,255,255,.06), transparent 40%),
-    radial-gradient(ellipse at 85% 100%, rgba(255,255,255,.03), transparent 35%);
-  pointer-events:none;
-  z-index:0;
-}
-
-/* ── TOP: Split layout ── */
-.proof-top{
-  position:relative;
-  z-index:1;
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:32px;
-  align-items:end;
-  padding:36px 36px 0;
-}
-
-.proof-narrative{
-  max-width:580px;
-}
-
-.proof-badge{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 14px;
-  margin-bottom:24px;
-  border-radius:999px;
-  font-family:var(--font-display);
-  font-size:10px;
-  font-weight:600;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--grey-bright);
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.06);
-}
-
-.proof-badge-dot{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:var(--white-primary);
-  animation:dot-pulse 2.4s ease infinite;
-}
-
-@keyframes dot-pulse{
-  0%,100%{opacity:.4;transform:scale(1)}
-  50%{opacity:1;transform:scale(1.3)}
-}
-
-.proof-title{
-  font-family:var(--font-display);
-  font-size:clamp(26px,3.5vw,46px);
-  font-weight:800;
-  line-height:1.1;
-  letter-spacing:-.03em;
-  margin-bottom:18px;
-}
-
-.proof-title .thin{
-  font-weight:300;
-  color:var(--grey-bright);
-}
-
-.proof-context{
-  font-size:15px;
-  font-weight:400;
-  color:var(--grey-light);
-  line-height:1.75;
-  max-width:520px;
-}
-
-/* Hero metric — the big number on the right */
-.proof-hero-metric{
-  text-align:right;
-  padding-bottom:12px;
-  position:relative;
-}
-
-.proof-hero-number{
-  font-family:var(--font-display);
-  font-size:clamp(56px,7vw,88px);
-  font-weight:900;
-  color:var(--white-pure);
-  line-height:.85;
-  letter-spacing:-.05em;
-  position:relative;
-}
-
-/* Subtle glow behind the big number */
-.proof-hero-number::after{
-  content:'';
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:200px;
-  height:120px;
-  background:radial-gradient(ellipse,rgba(255,255,255,.06),transparent 70%);
-  pointer-events:none;
-  z-index:-1;
-}
-
-.proof-hero-unit{
-  font-family:var(--font-display);
-  font-size:13px;
-  font-weight:500;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  color:var(--grey-mid);
-  margin-top:10px;
-}
-
-/* ── METRICS ROW ── */
-.proof-metrics{
-  position:relative;
-  z-index:1;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1px;
-  margin:32px 0 0;
-  background:rgba(255,255,255,.03);
-}
-
-.metric{
-  padding:28px 24px;
-  background:rgba(255,255,255,.02);
-  transition:background .5s var(--ease-apple);
-  text-align:center;
-}
-
-.metric:hover{
-  background:rgba(255,255,255,.04);
-}
-
-.metric-kicker{
-  font-family:var(--font-display);
-  font-size:10px;
-  font-weight:600;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--grey-mid);
-  margin-bottom:12px;
-}
-
-.metric-number{
-  font-family:var(--font-display);
-  font-size:clamp(26px,2.8vw,38px);
-  font-weight:800;
-  color:var(--white-pure);
-  line-height:1;
-  letter-spacing:-.03em;
-  margin-bottom:6px;
-}
-
-.metric-label{
-  font-family:var(--font-display);
-  font-size:10px;
-  color:var(--grey-bright);
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  font-weight:500;
-}
-
-/* ── COMPARISON BAR — Visual proof ── */
-.proof-compare{
-  position:relative;
-  z-index:1;
-  padding:28px 36px 32px;
-}
-
-.compare-label{
-  font-family:var(--font-display);
-  font-size:10px;
-  font-weight:600;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--grey-mid);
-  margin-bottom:20px;
-}
-
-.compare-row{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-
-.compare-bar{
-  display:grid;
-  grid-template-columns:140px 1fr auto;
-  align-items:center;
-  gap:16px;
-}
-
-.compare-bar-label{
-  font-family:var(--font-display);
-  font-size:12px;
-  font-weight:500;
-  color:var(--grey-bright);
-  letter-spacing:.02em;
-}
-
-.compare-bar-track{
-  height:6px;
-  border-radius:100px;
-  background:rgba(255,255,255,.04);
-  overflow:hidden;
-  position:relative;
-}
-
-.compare-bar-fill{
-  height:100%;
-  border-radius:100px;
-  background:var(--white-primary);
-  transform-origin:left;
-  transform:scaleX(0);
-  transition:transform 1.8s var(--ease-out);
-}
-
-.compare-bar-fill.animated{
-  transform:scaleX(1);
-}
-
-/* Dimmer fill for reposts */
-.compare-bar--dim .compare-bar-fill{
-  background:rgba(255,255,255,.15);
-}
-
-.compare-bar-value{
-  font-family:var(--font-display);
-  font-size:13px;
-  font-weight:700;
-  color:var(--white-dim);
-  min-width:50px;
-  text-align:right;
-  letter-spacing:-.01em;
-}
-
-.compare-bar--bright .compare-bar-value{
-  color:var(--white-pure);
-}
-
-/* ── INSIGHT FOOTER ── */
-.proof-insight{
-  position:relative;
-  z-index:1;
-  margin:24px 36px 36px;
-  padding:20px 24px;
-  border-radius:14px;
-  background:rgba(255,255,255,.025);
-  border:1px solid rgba(255,255,255,.04);
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-
-.proof-insight-icon{
-  flex-shrink:0;
-  width:18px;
-  height:18px;
-  color:var(--grey-mid);
-}
-
-.proof-insight p{
-  font-size:13px;
-  line-height:1.65;
-  color:var(--grey-light);
-}
-
-.proof-insight strong{
-  color:var(--white-primary);
-  font-weight:600;
-}
-
-/* ── PROOF RESPONSIVE ── */
-@media(max-width:768px){
-  .proof-shell{border-radius:22px}
-  .proof-top{
-    grid-template-columns:1fr;
-    gap:24px;
-    padding:28px 24px 0;
-  }
-  .proof-hero-metric{text-align:left;padding-bottom:0}
-  .proof-hero-number{font-size:clamp(48px,12vw,68px)}
-  .proof-metrics{grid-template-columns:1fr}
-  .proof-compare{padding:24px 24px 28px}
-  .compare-bar{grid-template-columns:100px 1fr auto;gap:12px}
-  .proof-insight{margin:0 24px 28px;gap:10px}
-}
-
-/* ═══════════════ REST OF SITE (unchanged from document) ═══════════════ */
+.hero-availability{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--grey-mid);margin-top:16px}
+.hero-availability-dot{width:5px;height:5px;border-radius:50%;background:#34d399;animation:avail-pulse 2.4s ease infinite}
+@keyframes avail-pulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
 
 /* WORKS */
 .works{padding:var(--section-pad) var(--side-pad);max-width:1400px;margin:0 auto}
@@ -605,9 +149,7 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .tab-btn.active{background:var(--white-primary);color:var(--black-pure);border-color:var(--white-primary);font-weight:600}
 .tab-btn .tab-count{font-size:10px;font-weight:500;color:var(--grey-dark);margin-left:6px;transition:color .5s}
 .tab-btn.active .tab-count{color:rgba(0,0,0,.4)}
-.cat-panel{display:none}
-.cat-panel.active{display:block}
-.cat-panel.is-entering{animation:panelIn .5s var(--ease-smooth) both}
+.cat-panel{display:none}.cat-panel.active{display:block}.cat-panel.is-entering{animation:panelIn .5s var(--ease-smooth) both}
 @keyframes panelIn{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:9/12;background:var(--surface-1);cursor:pointer;transition:transform .6s var(--ease-out),opacity .6s var(--ease-smooth)}
@@ -639,229 +181,315 @@ nav.scrolled .nav-logo{opacity:1;transform:translateY(0)}
 .show-more-btn.is-expanded .btn-icon{transform:rotate(180deg)}
 .show-more-btn.is-expanded:hover .btn-icon{transform:rotate(180deg) translateY(2px)}
 
-/* ═══════════════════════════════════════════════
-   METHOD — Variant C: Timeline système (Linear-style)
-   Connected vertical line + nodes + deliverable tags
-   ═══════════════════════════════════════════════ */
-.method{
-  padding:var(--section-pad) var(--side-pad);
-  max-width:900px;
-  margin:0 auto;
-}
-
+/* METHOD */
+.method{padding:var(--section-pad) var(--side-pad);max-width:900px;margin:0 auto}
 .method-header{text-align:center;margin-bottom:80px}
-
-.method-header h2{
-  font-family:var(--font-display);
-  font-size:clamp(28px,3.5vw,48px);
-  font-weight:800;
-  letter-spacing:-.03em;
-  margin-bottom:14px;
-}
-
-.method-header p{
-  font-size:16px;
-  color:var(--grey-light);
-  max-width:440px;
-  margin:0 auto;
-  line-height:1.7;
-}
-
-/* Timeline container */
-.mc-timeline{
-  position:relative;
-  padding-left:48px;
-}
-
-/* The connecting line */
-.mc-timeline::before{
-  content:'';
-  position:absolute;
-  left:11px;
-  top:8px;
-  bottom:8px;
-  width:1px;
-  background:linear-gradient(
-    to bottom,
-    rgba(255,255,255,.12),
-    rgba(255,255,255,.06) 50%,
-    rgba(255,255,255,.02)
-  );
-}
-
-.mc-node{
-  position:relative;
-  padding:0 0 56px;
-}
-
+.method-header h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,48px);font-weight:800;letter-spacing:-.03em;margin-bottom:14px}
+.method-header p{font-size:16px;color:var(--grey-light);max-width:440px;margin:0 auto;line-height:1.7}
+.mc-timeline{position:relative;padding-left:48px}
+.mc-timeline::before{content:'';position:absolute;left:11px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,rgba(255,255,255,.12),rgba(255,255,255,.06) 50%,rgba(255,255,255,.02))}
+.mc-node{position:relative;padding:0 0 56px}
 .mc-node:last-child{padding-bottom:0}
+.mc-node::before{content:'';position:absolute;left:-48px;top:8px;width:22px;height:22px;border-radius:50%;background:var(--black-deep);border:2px solid rgba(255,255,255,.12);transition:border-color .5s var(--ease-out), box-shadow .5s var(--ease-out);z-index:1}
+.mc-node::after{content:'';position:absolute;left:-41px;top:15px;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);transition:background .5s var(--ease-out), transform .5s var(--ease-out);z-index:2}
+.mc-node:hover::before{border-color:rgba(255,255,255,.3);box-shadow:0 0 20px rgba(255,255,255,.06)}
+.mc-node:hover::after{background:var(--white-primary);transform:scale(1.2)}
+.mc-node-phase{font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:10px}
+.mc-node-title{font-family:var(--font-display);font-size:clamp(20px,2.5vw,28px);font-weight:700;letter-spacing:-.02em;margin-bottom:14px;line-height:1.2}
+.mc-node-desc{font-size:15px;color:var(--grey-light);line-height:1.75;max-width:540px;margin-bottom:18px}
+.mc-node-tags{display:flex;flex-wrap:wrap;gap:8px}
+.mc-tag{font-family:var(--font-display);font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--grey-bright);padding:6px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:100px;transition:all .4s var(--ease-out)}
+.mc-tag:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:var(--white-dim)}
+.mc-result{position:relative;margin-top:48px;padding:24px 28px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.04);margin-left:-48px}
+.mc-result p{font-size:14px;color:var(--grey-light);line-height:1.7}
+.mc-result strong{color:var(--white-primary);font-weight:600}
+@media(max-width:600px){.mc-timeline{padding-left:36px}.mc-timeline::before{left:7px}.mc-node::before{left:-36px;width:16px;height:16px}.mc-node::after{left:-31px;top:12px;width:6px;height:6px}.mc-result{margin-left:-36px}}
 
-/* The dot on the timeline */
-.mc-node::before{
-  content:'';
-  position:absolute;
-  left:-48px;
-  top:8px;
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  background:var(--black-deep);
-  border:2px solid rgba(255,255,255,.12);
-  transition:border-color .5s var(--ease-out), box-shadow .5s var(--ease-out);
-  z-index:1;
-}
+/* ═══════════════════════════════════════════════════════════════
+   CLIPPING STRATEGY — Section Styles
+   ═══════════════════════════════════════════════════════════════ */
 
-/* Inner dot */
-.mc-node::after{
-  content:'';
-  position:absolute;
-  left:-41px;
-  top:15px;
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:rgba(255,255,255,.25);
-  transition:background .5s var(--ease-out), transform .5s var(--ease-out);
-  z-index:2;
-}
-
-.mc-node:hover::before{
-  border-color:rgba(255,255,255,.3);
-  box-shadow:0 0 20px rgba(255,255,255,.06);
-}
-
-.mc-node:hover::after{
-  background:var(--white-primary);
-  transform:scale(1.2);
-}
-
-.mc-node-phase{
-  font-family:var(--font-display);
-  font-size:10px;
-  font-weight:600;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--grey-mid);
-  margin-bottom:10px;
-}
-
-.mc-node-title{
-  font-family:var(--font-display);
-  font-size:clamp(20px,2.5vw,28px);
-  font-weight:700;
-  letter-spacing:-.02em;
-  margin-bottom:14px;
-  line-height:1.2;
-}
-
-.mc-node-desc{
-  font-size:15px;
-  color:var(--grey-light);
-  line-height:1.75;
-  max-width:540px;
-  margin-bottom:18px;
-}
-
-/* Deliverable tags */
-.mc-node-tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-
-.mc-tag{
-  font-family:var(--font-display);
-  font-size:11px;
-  font-weight:500;
-  letter-spacing:.06em;
-  color:var(--grey-bright);
-  padding:6px 14px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.05);
-  border-radius:100px;
-  transition:all .4s var(--ease-out);
-}
-
-.mc-tag:hover{
-  background:rgba(255,255,255,.06);
-  border-color:rgba(255,255,255,.1);
-  color:var(--white-dim);
-}
-
-/* Result block at the bottom */
-.mc-result{
-  position:relative;
-  margin-top:48px;
-  padding:24px 28px;
-  border-radius:16px;
-  background:rgba(255,255,255,.025);
-  border:1px solid rgba(255,255,255,.04);
-  margin-left:-48px;
-}
-
-.mc-result p{
-  font-size:14px;
-  color:var(--grey-light);
-  line-height:1.7;
-}
-
-.mc-result strong{
-  color:var(--white-primary);
-  font-weight:600;
-}
-
-@media(max-width:600px){
-  .mc-timeline{padding-left:36px}
-  .mc-timeline::before{left:7px}
-  .mc-node::before{left:-36px;width:16px;height:16px}
-  .mc-node::after{left:-31px;top:12px;width:6px;height:6px}
-  .mc-result{margin-left:-36px}
-}
-
-/* ═══════════════════════════════════════════════
-   PROOF 2 — Sevenandseries (reuses proof-shell)
-   ═══════════════════════════════════════════════ */
-.proof-2{
-  padding:0 var(--side-pad) var(--section-pad);
+.clipping{
+  padding:var(--section-pad) var(--side-pad);
   max-width:1200px;
   margin:0 auto;
 }
 
-.proof-2 .proof-shell{margin-top:0}
-
-.proof-2-metrics{
-  position:relative;z-index:1;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1px;
-  margin:36px 0 0;
-  background:rgba(255,255,255,.03);
+.clipping-header{
+  text-align:center;
+  margin-bottom:clamp(72px,8vh,120px);
 }
 
-/* CDI signal badge in hero */
-.hero-availability{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
+.clipping-header h2{
   font-family:var(--font-display);
-  font-size:10px;
-  font-weight:500;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--grey-mid);
-  margin-top:16px;
+  font-size:clamp(32px,4.5vw,56px);
+  font-weight:800;
+  letter-spacing:-.03em;
+  line-height:1.1;
+  margin-bottom:20px;
 }
 
-.hero-availability-dot{
-  width:5px;height:5px;
-  border-radius:50%;
-  background:#34d399;
-  animation:avail-pulse 2.4s ease infinite;
+.clipping-header h2 .thin{
+  font-weight:300;
+  color:var(--grey-bright);
 }
 
-@keyframes avail-pulse{
-  0%,100%{opacity:.5;transform:scale(1)}
-  50%{opacity:1;transform:scale(1.3)}
+.clipping-header p{
+  font-size:clamp(15px,1.2vw,17px);
+  color:var(--grey-light);
+  max-width:520px;
+  margin:0 auto;
+  line-height:1.75;
+}
+
+/* Problem / Opportunity */
+.clip-problem{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
+  border-radius:24px;
+  overflow:hidden;
+  margin-bottom:clamp(64px,7vh,100px);
+}
+
+.clip-problem-card{
+  padding:clamp(32px,3.5vw,52px);
+  background:rgba(255,255,255,.02);
+  position:relative;
+  transition:background .6s var(--ease-apple);
+}
+
+.clip-problem-card:hover{background:rgba(255,255,255,.035)}
+
+.clip-problem-card::before{
+  content:'';position:absolute;inset:0;
+  border:1px solid rgba(255,255,255,.04);
+  pointer-events:none;
+}
+
+.clip-problem-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;color:var(--grey-bright);
+  transition:all .5s var(--ease-out);
+}
+
+.clip-problem-card:hover .clip-problem-icon{
+  background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1);color:var(--white-primary);
+}
+
+.clip-problem-kicker{
+  font-family:var(--font-display);font-size:10px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:14px;
+}
+
+.clip-problem-title{
+  font-family:var(--font-display);font-size:clamp(18px,2vw,24px);font-weight:700;
+  letter-spacing:-.02em;margin-bottom:14px;line-height:1.25;
+}
+
+.clip-problem-text{
+  font-size:14px;color:var(--grey-light);line-height:1.75;max-width:400px;
+}
+
+/* Flow visual */
+.clip-flow{margin-bottom:clamp(64px,7vh,100px)}
+
+.clip-flow-inner{
+  position:relative;border-radius:24px;
+  background:linear-gradient(160deg, rgba(255,255,255,.04), rgba(255,255,255,.012));
+  border:1px solid rgba(255,255,255,.05);
+  padding:clamp(40px,4vw,64px) clamp(32px,3vw,56px);
+  overflow:hidden;
+}
+
+.clip-flow-inner::before{
+  content:'';position:absolute;top:-60%;left:50%;transform:translateX(-50%);
+  width:500px;height:400px;
+  background:radial-gradient(ellipse, rgba(255,255,255,.04), transparent 70%);
+  pointer-events:none;
+}
+
+.clip-flow-label{
+  text-align:center;font-family:var(--font-display);font-size:10px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--grey-mid);
+  margin-bottom:clamp(36px,4vh,56px);position:relative;z-index:1;
+}
+
+.clip-flow-steps{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  position:relative;z-index:1;
+}
+
+.clip-flow-step{text-align:center;position:relative;padding:0 12px}
+
+.clip-flow-step:not(:last-child)::after{
+  content:'';position:absolute;top:28px;right:-2px;
+  width:calc(100% - 56px);height:1px;
+  background:linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,.15), rgba(255,255,255,.08));
+  transform:translateX(50%);
+}
+
+.clip-flow-dot{
+  width:56px;height:56px;border-radius:16px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;font-size:20px;
+  transition:all .5s var(--ease-out);color:var(--grey-bright);
+}
+
+.clip-flow-step:hover .clip-flow-dot{
+  background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);
+  transform:translateY(-4px);box-shadow:0 12px 40px rgba(255,255,255,.03);
+}
+
+.clip-flow-step-title{
+  font-family:var(--font-display);font-size:14px;font-weight:700;
+  letter-spacing:-.01em;margin-bottom:8px;color:var(--white-primary);
+}
+
+.clip-flow-step-desc{font-size:12px;color:var(--grey-mid);line-height:1.6}
+
+/* Process cards */
+.clip-process{margin-bottom:clamp(64px,7vh,100px)}
+
+.clip-process-label{
+  text-align:center;font-family:var(--font-display);font-size:10px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--grey-mid);
+  margin-bottom:clamp(36px,4vh,48px);
+}
+
+.clip-process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+
+.clip-step{
+  position:relative;padding:clamp(32px,3vw,44px);
+  background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);
+  transition:all .6s var(--ease-apple);overflow:hidden;
+}
+
+.clip-step:first-child{border-radius:20px 0 0 20px}
+.clip-step:last-child{border-radius:0 20px 20px 0}
+.clip-step:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.07)}
+
+.clip-step::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+  opacity:0;transition:opacity .6s var(--ease-apple);
+}
+
+.clip-step:hover::before{opacity:1}
+
+.clip-step-number{
+  font-family:var(--font-display);font-size:48px;font-weight:900;
+  color:rgba(255,255,255,.04);line-height:1;letter-spacing:-.04em;
+  margin-bottom:24px;transition:color .6s var(--ease-apple);
+}
+
+.clip-step:hover .clip-step-number{color:rgba(255,255,255,.07)}
+
+.clip-step-title{
+  font-family:var(--font-display);font-size:clamp(18px,1.8vw,22px);font-weight:700;
+  letter-spacing:-.02em;margin-bottom:14px;line-height:1.2;
+}
+
+.clip-step-desc{font-size:14px;color:var(--grey-light);line-height:1.75;margin-bottom:20px}
+
+.clip-step-tags{display:flex;flex-wrap:wrap;gap:6px}
+
+.clip-step-tag{
+  font-family:var(--font-display);font-size:10px;font-weight:500;letter-spacing:.06em;
+  color:var(--grey-bright);padding:5px 12px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);
+  border-radius:100px;transition:all .4s var(--ease-out);
+}
+
+.clip-step-tag:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+
+/* Impact block */
+.clip-impact{
+  position:relative;border-radius:24px;
+  background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 24px 80px rgba(0,0,0,.35);
+  overflow:hidden;margin-bottom:clamp(48px,5vh,72px);
+}
+
+.clip-impact::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 0%, rgba(255,255,255,.05), transparent 45%),
+    radial-gradient(ellipse at 80% 100%, rgba(255,255,255,.03), transparent 40%);
+  pointer-events:none;
+}
+
+.clip-impact-inner{
+  position:relative;z-index:1;display:grid;
+  grid-template-columns:1fr auto;gap:40px;align-items:center;
+  padding:clamp(36px,4vw,56px);
+}
+
+.clip-impact-text h3{
+  font-family:var(--font-display);font-size:clamp(22px,2.8vw,36px);font-weight:800;
+  letter-spacing:-.03em;line-height:1.15;margin-bottom:16px;
+}
+
+.clip-impact-text h3 .thin{font-weight:300;color:var(--grey-bright)}
+
+.clip-impact-text p{font-size:15px;color:var(--grey-light);line-height:1.75;max-width:480px}
+
+.clip-impact-visual{text-align:center;min-width:200px}
+
+.clip-impact-equation{display:flex;flex-direction:column;align-items:center;gap:8px}
+
+.clip-eq-item{font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;line-height:1}
+
+.clip-eq-from{font-size:clamp(16px,1.5vw,20px);color:var(--grey-mid)}
+
+.clip-eq-arrow{font-size:18px;color:rgba(255,255,255,.12);margin:4px 0}
+
+.clip-eq-to{
+  font-size:clamp(44px,5vw,64px);font-weight:900;color:var(--white-pure);position:relative;
+}
+
+.clip-eq-to::after{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:160px;height:100px;
+  background:radial-gradient(ellipse,rgba(255,255,255,.05),transparent 70%);
+  pointer-events:none;z-index:-1;
+}
+
+.clip-eq-unit{
+  font-family:var(--font-display);font-size:11px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--grey-mid);margin-top:8px;
+}
+
+.clip-cta-block{text-align:center}
+
+.clip-cta-text{
+  font-family:var(--font-display);font-size:clamp(16px,1.6vw,20px);font-weight:500;
+  color:var(--grey-light);margin-bottom:28px;line-height:1.5;
+}
+
+.clip-cta-text strong{color:var(--white-primary);font-weight:600}
+
+@media(max-width:900px){
+  .clip-process-grid{grid-template-columns:1fr}
+  .clip-step{border-radius:0!important}
+  .clip-step:first-child{border-radius:20px 20px 0 0!important}
+  .clip-step:last-child{border-radius:0 0 20px 20px!important}
+}
+
+@media(max-width:768px){
+  .clip-problem{grid-template-columns:1fr}
+  .clip-flow-steps{grid-template-columns:repeat(2,1fr);gap:24px}
+  .clip-flow-step:not(:last-child)::after{display:none}
+  .clip-impact-inner{grid-template-columns:1fr;text-align:center}
+  .clip-impact-text p{margin:0 auto}
+  .clip-impact-visual{min-width:unset}
+}
+
+@media(max-width:540px){
+  .clip-flow-steps{grid-template-columns:1fr;gap:20px}
 }
 
 /* CONTACT */
@@ -890,15 +518,14 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
   <ul class="nav-links">
     <li><a href="#proof">Cas clients</a></li>
     <li><a href="#works">Travaux</a></li>
+    <li><a href="#clipping">Clipping</a></li>
     <li><a href="#method">Méthode</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<!-- HERO — Stat-first + Video Wall -->
+<!-- HERO -->
 <section class="hero" id="hero">
-
-  <!-- Video wall background — 5 columns, 3 videos each, duplicated for infinite scroll -->
   <div class="hero-video-wall" aria-hidden="true">
     <div class="hero-video-col"><div class="col-inner">
       <video autoplay muted loop playsinline preload="metadata"><source src="videos/bradtom.mp4" type="video/mp4"></video>
@@ -941,10 +568,7 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
       <video autoplay muted loop playsinline preload="metadata"><source src="videos/RenaudAdios.mp4" type="video/mp4"></video>
     </div></div>
   </div>
-
-  <!-- Dark overlay -->
   <div class="hero-video-overlay"></div>
-
   <div class="hero-label reveal reveal-d1">Short-Form Strategist</div>
   <div class="hero-stat-line reveal reveal-d2">
     <span class="hero-number count-up" data-target="80" data-suffix="">0</span>
@@ -970,149 +594,69 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
 
 <div class="divider"></div>
 
-<!-- ═══════════════════════════════════════
-     PROOF V5 — Redesigned Case Study
-     ═══════════════════════════════════════ -->
+<!-- PROOF V5 — Bangrzfr -->
 <section class="proof" id="proof">
   <div class="section-label reveal">Case Study</div>
-
   <div class="proof-shell reveal">
-
-    <!-- TOP: Narrative + Hero Metric -->
     <div class="proof-top">
       <div class="proof-narrative">
-        <div class="proof-badge">
-          <span class="proof-badge-dot"></span>
-          3 mois de mission
-        </div>
-        <h2 class="proof-title reveal reveal-d1">
-          Bangrzfr <span class="thin">× Warner Music France</span>
-        </h2>
-        <p class="proof-context reveal reveal-d2">
-          Relancer la présence TikTok d'un média musical majeur. Carte blanche pour créer des contenus originaux pensés pour la plateforme, en parallèle des reposts Instagram.
-        </p>
+        <div class="proof-badge"><span class="proof-badge-dot"></span>3 mois de mission</div>
+        <h2 class="proof-title reveal reveal-d1">Bangrzfr <span class="thin">× Warner Music France</span></h2>
+        <p class="proof-context reveal reveal-d2">Relancer la présence TikTok d'un média musical majeur. Carte blanche pour créer des contenus originaux pensés pour la plateforme, en parallèle des reposts Instagram.</p>
       </div>
       <div class="proof-hero-metric reveal reveal-d3">
-        <div class="proof-hero-number">
-          <span class="count-up" data-target="10.2" data-suffix="M" data-decimals="1">0</span>
-        </div>
+        <div class="proof-hero-number"><span class="count-up" data-target="10.2" data-suffix="M" data-decimals="1">0</span></div>
         <div class="proof-hero-unit">Vues cumulées</div>
       </div>
     </div>
-
-    <!-- METRICS ROW -->
     <div class="proof-metrics stagger-group reveal">
-      <div class="metric stagger-child">
-        <div class="metric-kicker">Croissance</div>
-        <div class="metric-number"><span class="count-up" data-target="30" data-prefix="+" data-suffix="k">0</span></div>
-        <div class="metric-label">Nouveaux abonnés</div>
-      </div>
-      <div class="metric stagger-child">
-        <div class="metric-kicker">Volume</div>
-        <div class="metric-number"><span class="count-up" data-target="40">0</span></div>
-        <div class="metric-label">Créations originales</div>
-      </div>
-      <div class="metric stagger-child">
-        <div class="metric-kicker">Impact</div>
-        <div class="metric-number"><span class="count-up" data-target="20" data-prefix="×">0</span></div>
-        <div class="metric-label">Vs reposts Instagram</div>
-      </div>
+      <div class="metric stagger-child"><div class="metric-kicker">Croissance</div><div class="metric-number"><span class="count-up" data-target="30" data-prefix="+" data-suffix="k">0</span></div><div class="metric-label">Nouveaux abonnés</div></div>
+      <div class="metric stagger-child"><div class="metric-kicker">Volume</div><div class="metric-number"><span class="count-up" data-target="40">0</span></div><div class="metric-label">Créations originales</div></div>
+      <div class="metric stagger-child"><div class="metric-kicker">Impact</div><div class="metric-number"><span class="count-up" data-target="20" data-prefix="×">0</span></div><div class="metric-label">Vs reposts Instagram</div></div>
     </div>
-
-    <!-- COMPARISON BARS — Visual proof of ×20 -->
     <div class="proof-compare reveal" id="proofCompare">
       <div class="compare-label">Performance comparée</div>
       <div class="compare-row">
-        <div class="compare-bar compare-bar--dim">
-          <span class="compare-bar-label">103 Reposts</span>
-          <div class="compare-bar-track">
-            <div class="compare-bar-fill" data-width="5"></div>
-          </div>
-          <span class="compare-bar-value">1.1M</span>
-        </div>
-        <div class="compare-bar compare-bar--bright">
-          <span class="compare-bar-label">40 Originaux</span>
-          <div class="compare-bar-track">
-            <div class="compare-bar-fill" data-width="100"></div>
-          </div>
-          <span class="compare-bar-value">10.2M</span>
-        </div>
+        <div class="compare-bar compare-bar--dim"><span class="compare-bar-label">103 Reposts</span><div class="compare-bar-track"><div class="compare-bar-fill" data-width="5"></div></div><span class="compare-bar-value">1.1M</span></div>
+        <div class="compare-bar compare-bar--bright"><span class="compare-bar-label">40 Originaux</span><div class="compare-bar-track"><div class="compare-bar-fill" data-width="100"></div></div><span class="compare-bar-value">10.2M</span></div>
       </div>
     </div>
-
-    <!-- INSIGHT -->
     <div class="proof-insight reveal">
-      <svg class="proof-insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-      </svg>
-      <p>
-        Le contenu natif, <strong>pensé pour la plateforme</strong>, surpasse systématiquement le recyclage.
-        Moins de volume, <strong>20× plus d'impact</strong>.
-      </p>
+      <svg class="proof-insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+      <p>Le contenu natif, <strong>pensé pour la plateforme</strong>, surpasse systématiquement le recyclage. Moins de volume, <strong>20× plus d'impact</strong>.</p>
     </div>
-
   </div>
 </section>
 
 <!-- PROOF 2 — Sevenandseries -->
 <section class="proof-2" id="proof2">
   <div class="proof-shell reveal">
-
     <div class="proof-top">
       <div class="proof-narrative">
-        <div class="proof-badge">
-          <span class="proof-badge-dot"></span>
-          Projet personnel · 12 mois
-        </div>
-        <h2 class="proof-title reveal reveal-d1">
-          @sevenandseries
-        </h2>
-        <p class="proof-context reveal reveal-d2">
-          Compte Instagram cinéma lancé de zéro. Direction éditoriale, création de contenus,
-          branding, traduction. La quasi-totalité de la croissance est organique.
-          Seul investissement publicitaire : 500€ sur l'ensemble du projet, avec un coût par abonné très performant.
-        </p>
+        <div class="proof-badge"><span class="proof-badge-dot"></span>Projet personnel · 12 mois</div>
+        <h2 class="proof-title reveal reveal-d1">@sevenandseries</h2>
+        <p class="proof-context reveal reveal-d2">Compte Instagram cinéma lancé de zéro. Direction éditoriale, création de contenus, branding, traduction. La quasi-totalité de la croissance est organique. Seul investissement publicitaire : 500€ sur l'ensemble du projet, avec un coût par abonné très performant.</p>
       </div>
       <div class="proof-hero-metric reveal reveal-d3">
-        <div class="proof-hero-number">
-          <span class="count-up" data-target="50" data-suffix="M+">0</span>
-        </div>
+        <div class="proof-hero-number"><span class="count-up" data-target="50" data-suffix="M+">0</span></div>
         <div class="proof-hero-unit">Vues en 12 mois</div>
       </div>
     </div>
-
     <div class="proof-metrics stagger-group reveal">
-      <div class="metric stagger-child">
-        <div class="metric-kicker">Audience</div>
-        <div class="metric-number"><span class="count-up" data-target="76" data-suffix="k">0</span></div>
-        <div class="metric-label">Abonnés</div>
-      </div>
-      <div class="metric stagger-child">
-        <div class="metric-kicker">Budget pub</div>
-        <div class="metric-number"><span class="count-up" data-target="500" data-suffix="€">0</span></div>
-        <div class="metric-label">CPA très faible</div>
-      </div>
-      <div class="metric stagger-child">
-        <div class="metric-kicker">Croissance</div>
-        <div class="metric-number">95%+</div>
-        <div class="metric-label">Organique</div>
-      </div>
+      <div class="metric stagger-child"><div class="metric-kicker">Audience</div><div class="metric-number"><span class="count-up" data-target="76" data-suffix="k">0</span></div><div class="metric-label">Abonnés</div></div>
+      <div class="metric stagger-child"><div class="metric-kicker">Budget pub</div><div class="metric-number"><span class="count-up" data-target="500" data-suffix="€">0</span></div><div class="metric-label">CPA très faible</div></div>
+      <div class="metric stagger-child"><div class="metric-kicker">Croissance</div><div class="metric-number">95%+</div><div class="metric-label">Organique</div></div>
     </div>
-
     <div class="proof-insight reveal">
-      <svg class="proof-insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.58-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
-      </svg>
-      <p>
-        500€ de budget pub pour 76k abonnés et 50M de vues.
-        Le bon contenu réduit le coût d'acquisition, les ads amplifient ce qui performe déjà.
-      </p>
+      <svg class="proof-insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.58-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/></svg>
+      <p>500€ de budget pub pour 76k abonnés et 50M de vues. Le bon contenu réduit le coût d'acquisition, les ads amplifient ce qui performe déjà.</p>
     </div>
-
   </div>
 </section>
 
 <div class="divider"></div>
+
+<!-- WORKS -->
 <section class="works" id="works">
   <div class="works-header">
     <div class="section-label centered reveal">Travaux</div>
@@ -1125,7 +669,6 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
     <button class="tab-btn" data-panel="animation">Animation & IA<span class="tab-count">9</span></button>
   </div>
 
-  <!-- PANEL: SELECTION -->
   <div class="cat-panel active is-entering" id="panel-selection" data-limit="6">
     <div class="grid">
       <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/bradtom.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/p/DLdGhehiI0s/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Brad Pitt & Tom Cruise</div><div class="card-stats"><span class="card-stat"><b>8.9M</b> vues</span></div></div></div>
@@ -1138,7 +681,6 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
     <div class="show-more-wrap"><button class="show-more-btn"><span class="btn-label">Voir plus</span><span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button></div>
   </div>
 
-  <!-- PANEL: EDITS -->
   <div class="cat-panel" id="panel-edits" data-limit="6">
     <div class="grid">
       <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/Tron.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/reel/DIT4eY6NER_/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Edit · Sevenandseries</div><div class="card-title">Tron (1982–2025)</div><div class="card-stats"><span class="card-stat"><b>3.3M</b></span></div></div></div>
@@ -1154,7 +696,6 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
     <div class="show-more-wrap"><button class="show-more-btn"><span class="btn-label">Voir plus</span><span class="btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button></div>
   </div>
 
-  <!-- PANEL: ANIMATION & IA -->
   <div class="cat-panel" id="panel-animation" data-limit="6">
     <div class="grid">
       <div class="card"><video class="card-video" autoplay muted loop playsinline preload="metadata"><source src="videos/etienne.mp4" type="video/mp4"></video><div class="card-gradient"></div><a href="https://www.instagram.com/p/DO0sdpODsce/" target="_blank" class="card-ext">↗</a><div class="card-content"><div class="card-cat">Animation · Clip</div><div class="card-title">Etienne Daho, Animation Pochette</div><div class="card-stats"><span class="card-stat"><b>150k</b></span></div></div></div>
@@ -1173,68 +714,203 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
 
 <div class="divider"></div>
 
-<!-- METHOD — Variant C: Timeline système -->
+<!-- METHOD -->
 <section class="method" id="method">
   <div class="method-header">
     <div class="section-label centered reveal">Approche</div>
     <h2 class="reveal reveal-d1">Un système, pas un coup de chance.</h2>
     <p class="reveal reveal-d2">Chaque contenu viral est le résultat d'un processus rigoureux.</p>
   </div>
-
   <div class="mc-timeline reveal reveal-d2">
     <div class="mc-node">
       <div class="mc-node-phase">Phase 01 · Avant de créer</div>
       <h3 class="mc-node-title">Comprendre ce qui fonctionne pour vous</h3>
-      <p class="mc-node-desc">
-        Audit de vos contenus, de votre audience et de vos concurrents.
-        Je cartographie les formats qui performent, les hooks qui retiennent,
-        et les angles morts que personne n'exploite.
-      </p>
-      <div class="mc-node-tags">
-        <span class="mc-tag">Audit contenus</span>
-        <span class="mc-tag">Analyse concurrence</span>
-        <span class="mc-tag">Data rétention</span>
-      </div>
+      <p class="mc-node-desc">Audit de vos contenus, de votre audience et de vos concurrents. Je cartographie les formats qui performent, les hooks qui retiennent, et les angles morts que personne n'exploite.</p>
+      <div class="mc-node-tags"><span class="mc-tag">Audit contenus</span><span class="mc-tag">Analyse concurrence</span><span class="mc-tag">Data rétention</span></div>
     </div>
-
     <div class="mc-node">
       <div class="mc-node-phase">Phase 02 · Création</div>
       <h3 class="mc-node-title">Arrêter le scroll en 3 secondes</h3>
-      <p class="mc-node-desc">
-        Hook, écriture, direction artistique, montage. Chaque contenu
-        est calibré pour capter immédiatement et retenir jusqu'à la fin.
-        Le format est natif, pas recyclé.
-      </p>
-      <div class="mc-node-tags">
-        <span class="mc-tag">Hooks</span>
-        <span class="mc-tag">Montage</span>
-        <span class="mc-tag">Direction artistique</span>
-        <span class="mc-tag">Contenus natifs</span>
-      </div>
+      <p class="mc-node-desc">Hook, écriture, direction artistique, montage. Chaque contenu est calibré pour capter immédiatement et retenir jusqu'à la fin. Le format est natif, pas recyclé.</p>
+      <div class="mc-node-tags"><span class="mc-tag">Hooks</span><span class="mc-tag">Montage</span><span class="mc-tag">Direction artistique</span><span class="mc-tag">Contenus natifs</span></div>
     </div>
-
     <div class="mc-node">
       <div class="mc-node-phase">Phase 03 · Post-publication</div>
       <h3 class="mc-node-title">Chaque post nourrit le suivant</h3>
-      <p class="mc-node-desc">
-        Analyse des rétentions seconde par seconde, des partages, des saves.
-        Les données du post N alimentent la stratégie du post N+1.
-        C'est un cycle, pas une to-do list.
-      </p>
-      <div class="mc-node-tags">
-        <span class="mc-tag">Rétention / sec</span>
-        <span class="mc-tag">Partages</span>
-        <span class="mc-tag">Itération</span>
-      </div>
+      <p class="mc-node-desc">Analyse des rétentions seconde par seconde, des partages, des saves. Les données du post N alimentent la stratégie du post N+1. C'est un cycle, pas une to-do list.</p>
+      <div class="mc-node-tags"><span class="mc-tag">Rétention / sec</span><span class="mc-tag">Partages</span><span class="mc-tag">Itération</span></div>
     </div>
+    <div class="mc-result"><p><strong>Résultat :</strong> un système où chaque contenu est meilleur que le précédent. Pas de viralité accidentelle. Une progression mesurable.</p></div>
+  </div>
+</section>
 
-    <div class="mc-result">
-      <p>
-        <strong>Résultat :</strong> un système où chaque contenu est meilleur que le précédent.
-        Pas de viralité accidentelle. Une progression mesurable.
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CLIPPING STRATEGY — New Premium Section
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="clipping" id="clipping">
+
+  <!-- HEADER -->
+  <div class="clipping-header">
+    <div class="section-label centered reveal">Clipping Strategy</div>
+    <h2 class="reveal reveal-d1">
+      Transformer vos contenus longs<br><span class="thin">en formats viraux.</span>
+    </h2>
+    <p class="reveal reveal-d2">
+      Vos interviews, podcasts et émissions contiennent des dizaines de moments forts.
+      Mon travail : les identifier, les transformer, et les amplifier.
+    </p>
+  </div>
+
+  <!-- PROBLEM / OPPORTUNITY -->
+  <div class="clip-problem stagger-group reveal">
+    <div class="clip-problem-card stagger-child">
+      <div class="clip-problem-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 9v4m0 4h.01M3.6 9h16.8M5.8 3h12.4a2 2 0 011.98 1.72l1.6 12.8A2 2 0 0119.8 19.5H4.2a2 2 0 01-1.98-1.98l1.6-12.8A2 2 0 015.8 3z"/>
+        </svg>
+      </div>
+      <div class="clip-problem-kicker">Le problème</div>
+      <h3 class="clip-problem-title">Des heures de contenu, sous-exploitées</h3>
+      <p class="clip-problem-text">
+        Les médias, podcasts et labels produisent des heures de contenu long chaque semaine.
+        Mais moins de 5% est reformaté pour les réseaux sociaux. Un potentiel de visibilité massive reste inexploité.
+      </p>
+    </div>
+    <div class="clip-problem-card stagger-child">
+      <div class="clip-problem-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+      </div>
+      <div class="clip-problem-kicker">L'opportunité</div>
+      <h3 class="clip-problem-title">Le clipping change la donne</h3>
+      <p class="clip-problem-text">
+        Chaque interview, chaque émission contient des moments forts prêts à performer seuls.
+        Le clipping transforme un contenu long en une machine à visibilité sur TikTok, Instagram et YouTube Shorts.
       </p>
     </div>
   </div>
+
+  <!-- FLOW VISUAL -->
+  <div class="clip-flow reveal">
+    <div class="clip-flow-inner">
+      <div class="clip-flow-label">Le pipeline de clipping</div>
+      <div class="clip-flow-steps">
+        <div class="clip-flow-step">
+          <div class="clip-flow-dot">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="clip-flow-step-title">Contenu long</div>
+          <div class="clip-flow-step-desc">Interview, podcast, live, conférence</div>
+        </div>
+        <div class="clip-flow-step">
+          <div class="clip-flow-dot">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </div>
+          <div class="clip-flow-step-title">Moments forts</div>
+          <div class="clip-flow-step-desc">Punchlines, émotions, révélations</div>
+        </div>
+        <div class="clip-flow-step">
+          <div class="clip-flow-dot">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20"/></svg>
+          </div>
+          <div class="clip-flow-step-title">Formats courts</div>
+          <div class="clip-flow-step-desc">Montage natif, hooks, sous-titres</div>
+        </div>
+        <div class="clip-flow-step">
+          <div class="clip-flow-dot">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div class="clip-flow-step-title">Viralité</div>
+          <div class="clip-flow-step-desc">Distribution multi-plateforme</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS — 3 étapes -->
+  <div class="clip-process reveal">
+    <div class="clip-process-label">Méthode en 3 phases</div>
+    <div class="clip-process-grid stagger-group">
+      <div class="clip-step stagger-child">
+        <div class="clip-step-number">01</div>
+        <h3 class="clip-step-title">Identifier</h3>
+        <p class="clip-step-desc">
+          Visionnage intégral. Repérage des moments à fort potentiel viral : émotion, punchline, tension, révélation.
+          Chaque moment est évalué sur son hook power et sa shareability.
+        </p>
+        <div class="clip-step-tags">
+          <span class="clip-step-tag">Visionnage</span>
+          <span class="clip-step-tag">Hook scoring</span>
+          <span class="clip-step-tag">Sélection</span>
+        </div>
+      </div>
+      <div class="clip-step stagger-child">
+        <div class="clip-step-number">02</div>
+        <h3 class="clip-step-title">Transformer</h3>
+        <p class="clip-step-desc">
+          Chaque clip est monté en format natif pour la plateforme cible. Hook visuel dès la première seconde,
+          rythme serré, sous-titrage, direction artistique cohérente avec l'identité de la marque.
+        </p>
+        <div class="clip-step-tags">
+          <span class="clip-step-tag">Montage natif</span>
+          <span class="clip-step-tag">Hooks</span>
+          <span class="clip-step-tag">Sous-titrage</span>
+          <span class="clip-step-tag">DA</span>
+        </div>
+      </div>
+      <div class="clip-step stagger-child">
+        <div class="clip-step-number">03</div>
+        <h3 class="clip-step-title">Amplifier</h3>
+        <p class="clip-step-desc">
+          Publication optimisée par plateforme, analyse des rétentions, itération. Les données de chaque clip
+          nourrissent les suivants. L'objectif : un système qui progresse à chaque publication.
+        </p>
+        <div class="clip-step-tags">
+          <span class="clip-step-tag">Multi-plateforme</span>
+          <span class="clip-step-tag">Rétention</span>
+          <span class="clip-step-tag">Itération data</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPACT BLOCK -->
+  <div class="clip-impact reveal">
+    <div class="clip-impact-inner">
+      <div class="clip-impact-text">
+        <h3>
+          1 interview.<br>
+          <span class="thin">Jusqu'à 30 formats viraux.</span>
+        </h3>
+        <p>
+          Un seul contenu long, correctement clippé, peut générer des millions de vues et nourrir vos réseaux
+          pendant des semaines. Le clipping n'est pas du recyclage — c'est de la stratégie de distribution.
+        </p>
+      </div>
+      <div class="clip-impact-visual">
+        <div class="clip-impact-equation">
+          <span class="clip-eq-item clip-eq-from">1 contenu long</span>
+          <span class="clip-eq-arrow">↓</span>
+          <span class="clip-eq-item clip-eq-to">
+            <span class="count-up" data-target="30" data-suffix="">0</span>
+          </span>
+          <span class="clip-eq-unit">Clips optimisés</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="clip-cta-block reveal">
+    <p class="clip-cta-text">
+      Vous avez du contenu long qui dort ?<br>
+      <strong>Transformons-le en levier de visibilité.</strong>
+    </p>
+  </div>
+
 </section>
 
 <div class="divider"></div>
@@ -1254,7 +930,7 @@ footer{padding:40px var(--side-pad);text-align:center;font-family:var(--font-dis
 
 <footer>© 2025 Tao Le Gia</footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── Reveal ──
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
